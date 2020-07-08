@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/size_130dp"
+    android:layout_height="@dimen/size_85dp"
+    android:background="@drawable/common_shape_70percent_000000_15"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/loading_image"
+        android:layout_width="@dimen/size_22dp"
+        android:layout_height="@dimen/size_21dp"
+        android:layout_gravity="center"
+        android:src="@drawable/common_loading" />
+
+</merge>

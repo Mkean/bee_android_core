@@ -1,0 +1,90 @@
+ext {
+    android = [
+            compileSdkVersion: 30,
+            buildToolsVersion: "30.0.0",
+            applicationId    : "com.bee.android",
+            minSdkVersion    : 16,
+            targetSdkVersion : 30,
+            versionCode      : 1,
+            versionName      : "1.0",
+    ]
+
+    def dependVersion = [
+            support         : "1.0.0",
+            retrofit        : "2.2.0",
+            okhttp          : "3.9.1",
+            butterknife     : "10.2.1",
+            h5PreLoadVersion: "1"
+    ]
+
+    dependencies = [
+            //base
+            "appcompat"                 : "androidx.appcompat:appcompat:${dependVersion.support}",
+            "recyclerview"              : "androidx.recyclerview:recyclerview:${dependVersion.support}",
+            "design"                    : "com.google.android.material:material:${dependVersion.support}",
+            "annotations"               : "androidx.annotation:annotation:${dependVersion.support}",
+            "constraint-layout"         : "androidx.constraintlayout:constraintlayout:1.1.2",
+            "multidex"                  : "com.android.support:multidex:1.0.2",
+
+            "adapterHelper"                 : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
+            "SmartRefreshLayout"        : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-24",
+
+            // rx
+            "rxjava"                    : "io.reactivex.rxjava2:rxjava:2.1.0",
+            "rxandroid"                 : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            "rxpermissions"             : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.4",
+
+            // network
+            "gson"                      : "com.google.code.gson:gson:2.8.1",
+            "retrofit"                  : "com.squareup.retrofit2:retrofit:${dependVersion.retrofit}",
+            "retrofit-converter-gson"   : "com.squareup.retrofit2:converter-gson:${dependVersion.retrofit}",
+            "retrofit-adapter-rxjava2"  : "com.squareup.retrofit2:adapter-rxjava2:${dependVersion.retrofit}",
+            "okhttp"                    : "com.squareup.okhttp3:okhttp:${dependVersion.okhttp}",
+            "okhttp-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:${dependVersion.okhttp}",
+
+            //Glide
+            "glide"                     : "com.github.bumptech.glide:glide:4.11.0",
+            "glide-okhttp3"             : "com.github.bumptech.glide:okhttp3-integration:4.11.0",
+            "glide-compiler"            : "com.github.bumptech.glide:compiler:4.11.0",
+            "glide-transformations"     : "jp.wasabeef:glide-transformations:4.0.0",
+
+            //di
+            "butterknife"               : "com.jakewharton:butterknife:${dependVersion.butterknife}",
+            "butterknife-compiler"      : "com.jakewharton:butterknife-compiler:${dependVersion.butterknife}",
+
+            //other
+            "eventBus"                  : 'org.greenrobot:eventbus:3.1.1',
+
+            "webview-x5"                : 'com.tencent.tbs.tbssdk:sdk:43697',
+
+            "DSBridge"                  : "com.github.wendux:DSBridge-Android:3.0-SNAPSHOT",
+
+            //arouter
+            "arouter-annotation"        : 'com.alibaba:arouter-annotation:1.0.4',
+            "arouter-api"               : 'com.alibaba:arouter-api:1.5.0',
+            "arouter-compiler"          : 'com.alibaba:arouter-compiler:1.2.2',
+
+            "zxing"                     : "me.dm7.barcodescanner:zxing:1.9.13",
+
+            //logger
+            "logger"                    : 'com.orhanobut:logger:2.2.0',
+
+            //leakcanary
+            "debugleakcanary"           : 'com.squareup.leakcanary:leakcanary-android:1.5.4',
+            "releaseleakcanary"         : 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4',
+
+            "AndroidAutoSize"           : 'me.jessyan:autosize:1.2.1',
+
+            //图片裁剪
+            'ucrop'                     : 'com.yalantis:ucrop:1.4.1',
+            //知乎图片选择器
+            'matisse'                   : 'com.zhihu.android:matisse:0.5.2',
+            //时间选择器
+            'pickerView'                : 'com.contrarywind:Android-PickerView:4.1.8',
+
+            "lottie"                    : "com.airbnb.android:lottie:3.3.0",
+
+            "logan"                     : 'com.dianping.android.sdk:logan:1.2.3',
+
+    ]
+}
