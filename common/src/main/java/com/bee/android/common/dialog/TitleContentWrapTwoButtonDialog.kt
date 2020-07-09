@@ -57,7 +57,7 @@ class TitleContentWrapTwoButtonDialog : BaseDialog, View.OnClickListener {
         titleTv.text = title
         if (!TextUtils.isEmpty(content)) {
             contentTv.text = content
-        } else if (span_content != null) {
+        } else if (!TextUtils.isEmpty(span_content)) {
             contentTv.movementMethod = LinkMovementMethod.getInstance()
             contentTv.text = span_content
         } else {
@@ -81,5 +81,4 @@ class TitleContentWrapTwoButtonDialog : BaseDialog, View.OnClickListener {
             }
         }
     }
-
 }

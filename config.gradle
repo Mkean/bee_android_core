@@ -23,7 +23,7 @@ ext {
             "recyclerview"              : "androidx.recyclerview:recyclerview:${dependVersion.support}",
             "design"                    : "com.google.android.material:material:${dependVersion.support}",
             "annotations"               : "androidx.annotation:annotation:${dependVersion.support}",
-            "constraint-layout"         : "androidx.constraintlayout:constraintlayout:1.1.2",
+            "constraint-layout"         : "androidx.constraintlayout:constraintlayout:1.1.3",
             "multidex"                  : "com.android.support:multidex:1.0.2",
 
             "adapterHelper"                 : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
@@ -75,6 +75,9 @@ ext {
 
             "AndroidAutoSize"           : 'me.jessyan:autosize:1.2.1',
 
+            //微信分享、支付
+            "wechat-sdk-android-without-mta": 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.3',
+
             //图片裁剪
             'ucrop'                     : 'com.yalantis:ucrop:1.4.1',
             //知乎图片选择器
@@ -82,7 +85,7 @@ ext {
             //时间选择器
             'pickerView'                : 'com.contrarywind:Android-PickerView:4.1.8',
 
-            "lottie"                    : "com.airbnb.android:lottie:3.3.0",
+            "lottie"                    : 'com.airbnb.android:lottie:3.3.0',
 
             "logan"                     : 'com.dianping.android.sdk:logan:1.2.3',
 

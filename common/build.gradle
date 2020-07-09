@@ -34,6 +34,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     compileOptions {
@@ -97,6 +102,7 @@ dependencies {
     compileOnly rootProject.ext.dependencies["AndroidAutoSize"]
 
     compileOnly rootProject.ext.dependencies["webview-x5"]
+    compileOnly rootProject.ext.dependencies["wechat-sdk-android-without-mta"]
 
     //美团logan日志
     compileOnly rootProject.ext.dependencies["logan"]
@@ -105,6 +111,9 @@ dependencies {
 
     //时间选择器
     api rootProject.ext.dependencies["pickerView"]
+
+    // 支付宝
+    implementation (name: 'alipaySdk-15.7.7', ext: 'aar')
 
 
 }
