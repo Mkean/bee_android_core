@@ -28,6 +28,8 @@ android {
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 
+        buildConfigField('String','WXAPPID','"wx5604a4709b1af957"')
+
     }
     buildTypes {
         release {
@@ -102,6 +104,9 @@ dependencies {
     compileOnly rootProject.ext.dependencies["AndroidAutoSize"]
 
     compileOnly rootProject.ext.dependencies["webview-x5"]
+
+    compileOnly rootProject.ext.dependencies["DSBridge"]
+
     compileOnly rootProject.ext.dependencies["wechat-sdk-android-without-mta"]
 
     //美团logan日志

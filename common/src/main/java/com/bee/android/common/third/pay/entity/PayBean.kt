@@ -1,13 +1,13 @@
 package com.bee.android.common.third.pay.entity
 
 data class PayBean(
-        private val partnerId: String, // 商户号
-        private val prepayId: String, // 预付单号
-        private val nonceStr: String, // 随机串
-        private val timeStamp: String, // 时间戳
-        private val sign: String, // 签名
-        private val channel: String, // 支付类型
-        private val order: String // 订单信息
+         val partnerId: String, // 商户号
+         val prepayId: String, // 预付单号
+         val nonceStr: String, // 随机串
+         val timeStamp: String, // 时间戳
+         val sign: String, // 签名
+         val channel: String, // 支付类型
+         val order: String // 订单信息
 
 
 ) {
