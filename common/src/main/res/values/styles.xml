@@ -26,13 +26,33 @@
     </style>
 
     <style name="common_NewActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
-
         <item name="android:windowExitAnimation">@anim/common_dialog_dismiss_animation</item>
-
     </style>
 
     <style name="common_toast_CommonRemindDialog" parent="CommonRemindDialog">
         <item name="android:backgroundDimAmount">0.0</item>
+    </style>
+
+    <style name="common_base_AppCompat.ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/common_progress_large_white</item>
+        <item name="android:minWidth">@dimen/size_76dp</item>
+
+        <item name="android:maxWidth">@dimen/size_76dp</item>
+
+        <item name="android:minHeight">@dimen/size_76dp</item>
+
+        <item name="android:maxHeight">@dimen/size_76dp</item>
+    </style>
+
+    <style name="common_Loading.more_AppCompat.ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/common_progress_small_loading_more</item>
+        <item name="android:minWidth">16dip</item>
+        　　
+        <item name="android:maxWidth">16dip</item>
+        　　
+        <item name="android:minHeight">16dip</item>
+        　　
+        <item name="android:maxHeight">16dip</item>
     </style>
 
     <declare-styleable name="MultipleStatusView">

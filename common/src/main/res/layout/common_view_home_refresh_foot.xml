@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/size_10dp"
+    android:paddingBottom="@dimen/size_20dp">
+
+    <ImageView
+        android:layout_width="@dimen/size_181dp"
+        android:layout_height="@dimen/size_26dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/common_ai_refresh_footer" />
+
+</RelativeLayout>

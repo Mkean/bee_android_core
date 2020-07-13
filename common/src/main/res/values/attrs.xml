@@ -43,6 +43,41 @@
         <attr name="yc_bottomShow" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="PageStateRelativeLayout">
+
+        <attr name="emptyLayoutId" format="reference" />
+        <attr name="errorNetLayoutId" format="reference" />
+        <attr name="errorServerLayoutId" format="reference" />
+        <attr name="loadingLayoutId" format="reference" />
+        <attr name="loginLayoutId" format="reference" />
+
+        <attr name="errorServerClickId" format="reference" />
+        <attr name="errorNetClickId" format="reference" />
+        <attr name="loginClickId" format="reference" />
+
+        <attr name="loadingLayoutBg" format="color" />
+        <attr name="emptyLayoutBg" format="color" />
+        <attr name="errorNetLayoutBg" format="color" />
+        <attr name="errorServerLayoutBg" format="color" />
+        <attr name="loginLayoutBg" format="color" />
+
+        <attr name="loadingType" format="enum">
+            <enum name="general" value="1" />
+        </attr>
+
+        <attr name="loadingHint" format="string" />
+        <attr name="loginHint" format="string" />
+        <attr name="errorNetHint" format="string" />
+        <attr name="errorServerHint" format="string" />
+        <attr name="emptyHint" format="string" />
+
+        <attr name="childViewPaddingBottom" format="dimension" />
+        <attr name="childViewPaddingTop" format="dimension" />
+
+        <attr name="isChildClickable" format="boolean" />
+
+    </declare-styleable>
+
     <!--仿iOS的SwitchButton-->
     <declare-styleable name="common_SwitchButton">
         <attr name="common_shadow_radius" format="reference|dimension" />

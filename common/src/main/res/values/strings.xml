@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="name">network</string>
-
+    <string name="name">common</string>
+    <string name="common_str_loading_tip">加载中</string>
+    <string name="common_loading">加载更多</string>
     <string name="common_no_data">无数据返回，请稍后重试</string>
     <string name="common_load_error">加载失败，请稍后重试</string>
     <string name="common_net_error">网络异常，请稍后重试</string>
