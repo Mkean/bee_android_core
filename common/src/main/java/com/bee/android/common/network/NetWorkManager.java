@@ -124,7 +124,7 @@ public class NetWorkManager {
         }
 
         if (okConfig.getCookiesManager(context) != null) {
-            okBuilder.cookieJar(Objects.requireNonNull(okConfig.getCookiesManager(context)));
+            okBuilder.cookieJar(okConfig.getCookiesManager(context));
         }
 
         client = okBuilder.build();

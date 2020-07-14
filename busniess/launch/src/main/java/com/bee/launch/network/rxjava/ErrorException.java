@@ -1,4 +1,4 @@
-package com.bee.android.common.network.exception;
+package com.bee.launch.network.rxjava;
 
 public class ErrorException {
     private String code;

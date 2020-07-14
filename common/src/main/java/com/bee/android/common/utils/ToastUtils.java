@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bee.android.common.R;
-import com.bee.android.common.app.BaseApplication;
+import com.bee.android.common.app.CommonApplication;
 
 import java.lang.reflect.Field;
 
@@ -48,7 +48,7 @@ public class ToastUtils {
             if (TextUtils.isEmpty(msg)) {
                 return;
             }
-            View view = View.inflate(BaseApplication.app, R.layout.toast_layout, null);
+            View view = View.inflate(CommonApplication.app, R.layout.toast_layout, null);
             TextView textView = view.findViewById(R.id.toastTv);
             textView.setText(msg);
             show(view);
@@ -64,7 +64,7 @@ public class ToastUtils {
         if (TextUtils.isEmpty(msg)) {
             return;
         }
-        View view = View.inflate(BaseApplication.app, R.layout.toast_layout, null);
+        View view = View.inflate(CommonApplication.app, R.layout.toast_layout, null);
         TextView textView = view.findViewById(R.id.toastTv);
         textView.setText(msg);
         ImageView imageView = view.findViewById(R.id.toastImageView);
@@ -82,7 +82,7 @@ public class ToastUtils {
         if (TextUtils.isEmpty(msg)) {
             return;
         }
-        View view = View.inflate(BaseApplication.app, R.layout.toast_layout, null);
+        View view = View.inflate(CommonApplication.app, R.layout.toast_layout, null);
         TextView textView = view.findViewById(R.id.toastTv);
         textView.setText(msg);
         ImageView imageView = view.findViewById(R.id.toastImageView);
@@ -93,7 +93,7 @@ public class ToastUtils {
 
 
     private static void show(View view) {
-        Toast mToast = new Toast(BaseApplication.app);
+        Toast mToast = new Toast(CommonApplication.app);
         mToast.setView(view);
         mToast.setDuration(Toast.LENGTH_SHORT);
         mToast.setGravity(Gravity.CENTER, 0, 0);

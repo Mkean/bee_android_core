@@ -1,4 +1,4 @@
-package com.bee.android.common.network.call;
+package com.bee.launch.network.rxjava;
 
 import java.io.Serializable;
 import java.util.List;

@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bee.android.common.R;
-import com.bee.android.common.app.BaseApplication;
+import com.bee.android.common.app.CommonApplication;
 import com.bee.android.common.dialog.BaseDialog;
 import com.bee.android.common.dialog.DialogManager;
 import com.bee.android.common.permission.config.PermissionStr;
@@ -112,7 +112,7 @@ public class PermissionHelp {
         if (stringBuilder.length() > 0) {
             stringBuilder.setLength(stringBuilder.length() - 1);
         }
-        String appName = BaseApplication.app.getResources().getString(R.string.app_name);
+        String appName = CommonApplication.app.getResources().getString(R.string.app_name);
         return "请到\"设置-应用-" + appName + "\"中打开" + stringBuilder.toString() + "权限";
     }
 

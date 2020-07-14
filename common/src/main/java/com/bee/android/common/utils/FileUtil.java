@@ -9,14 +9,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.bee.android.common.app.BaseApplication;
+import com.bee.android.common.app.CommonApplication;
 import com.bee.android.common.manager.CommonFileManager;
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -487,8 +485,8 @@ public class FileUtil {
         try {
 
             return getFormatSize(getFolderSize(new File(context.getCacheDir() + "/" + InternalCacheDiskCacheFactory.DEFAULT_DISK_CACHE_DIR)) +
-                    getFolderSize(FileUtil.newFile(CommonFileManager.getExternalClearAbleFilePath(BaseApplication.app))) +
-                    getFolderSize(FileUtil.newFile(CommonFileManager.getInnerClearAbleFilePath(BaseApplication.app))));
+                    getFolderSize(FileUtil.newFile(CommonFileManager.getExternalClearAbleFilePath(CommonApplication.app))) +
+                    getFolderSize(FileUtil.newFile(CommonFileManager.getInnerClearAbleFilePath(CommonApplication.app))));
 
         } catch (Exception e) {
             Log.e(TAG, "getGlideCacheAndCourseSize error: " + e.getMessage());

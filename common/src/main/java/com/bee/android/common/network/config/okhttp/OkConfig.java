@@ -115,7 +115,7 @@ public class OkConfig implements IOkConfig, IInterceptorConfig, ICookies {
         return this;
     }
 
-    public OkConfig setRriteTimeOut(int default_writeTimeOut) {
+    public OkConfig setWriteTimeOut(int default_writeTimeOut) {
         this.default_writeTimeOut = default_writeTimeOut;
         return this;
     }
@@ -140,9 +140,8 @@ public class OkConfig implements IOkConfig, IInterceptorConfig, ICookies {
         return this;
     }
 
-    @Nullable
     @Override
-    public CookiesManager getCookiesManager(@NotNull Context context) {
+    public CookiesManager getCookiesManager( Context context) {
         return new CookiesManager(context);
     }
 }

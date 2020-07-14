@@ -1,6 +1,8 @@
-package com.bee.android.common.network.call;
+package com.bee.launch.network.rxjava;
 
-public class ResponseData<T> extends ApiResult<T> {
+import com.bee.android.common.network.rxjava.Optional;
+
+public class ResultData<T> extends ApiResult<T> {
     private T data;
     private int statusCode;
     private String message;
@@ -42,5 +44,9 @@ public class ResponseData<T> extends ApiResult<T> {
     @Override
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Optional<T> transform() {
+        return new Optional<>(data);
     }
 }

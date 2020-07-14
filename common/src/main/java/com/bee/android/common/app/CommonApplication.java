@@ -2,22 +2,37 @@ package com.bee.android.common.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bee.android.common.BuildConfig;
+import com.bee.android.common.logger.CommonLogConfig;
+import com.bee.android.common.logger.CommonLogger;
+import com.bee.android.common.utils.AppUtils;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 
-public class BaseApplication extends Application {
+import java.io.File;
 
-    public static BaseApplication app;
+public class CommonApplication extends Application {
+
+    private static final String TAG = "BaseApplication";
+
+    public static CommonApplication app;
 
     @Override
     public void onCreate() {
         super.onCreate();
         app = this;
+        String packageName = AppUtils.getPackageName(this);
+        Log.e("BaseApplication", "-----");
+        Log.e("BaseApplication", "------应用包名-----" + packageName);
+        String sign = AppUtils.getSign(this, packageName);
+        Log.e("BaseApplication", "------应用签名，和新浪签名工具生成的值一样的------" + sign);
+
         initARouter();
         initX5(this);
+        initCommonLog();
     }
 
     private void initARouter() {
@@ -65,4 +80,23 @@ public class BaseApplication extends Application {
             }
         });
     }
+
+    /**
+     * 初始化日志
+     */
+    private void initCommonLog() {
+        String logPath = getApplicationContext().getExternalFilesDir(null).getAbsolutePath() + File.separator + "app_log";
+        CommonLogConfig config = new CommonLogConfig()
+                .setMaxFile(200)
+                .setDay(7)
+                .setCachePath(getApplicationContext().getFilesDir().getAbsolutePath())
+                .setPath(logPath)
+                .setEncryptKey16("2020143252010714".getBytes())
+                .setEncryptIV16("2020143252010714".getBytes())
+                .enableAppCrash(true)
+                .enableDebug(true);
+
+        CommonLogger.init(config);
+    }
+
 }

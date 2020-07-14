@@ -1,4 +1,4 @@
-package com.bee.android.common.network.call;
+package com.bee.android.common.network.rxjava;
 
 import io.reactivex.observers.DisposableObserver;
 

@@ -1,10 +1,10 @@
-package com.bee.android.common.network.call;
+package com.bee.launch.network.rxjava;
 
 import android.util.Log;
 
+import com.bee.android.common.BuildConfig;
 import com.bee.android.common.network.exception.ApiException;
-import com.bee.android.common.network.exception.ErrorException;
-import com.dianping.logan.BuildConfig;
+import com.bee.android.common.network.rxjava.Callback;
 
 public abstract class ResultCallback<T> extends Callback<T> {
 
