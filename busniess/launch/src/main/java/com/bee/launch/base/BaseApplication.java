@@ -15,13 +15,15 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bee.android.common.BuildConfig;
 import com.bee.android.common.app.CommonApplication;
 import com.bee.android.common.event.AppBackEvent;
 import com.bee.android.common.event.AppFrontEvent;
 import com.bee.android.common.logger.CommonLogger;
 import com.bee.android.common.network.NetWorkManager;
 import com.bee.android.common.network.config.okhttp.OkConfig;
+import com.bee.launch.BuildConfig;
+import com.bee.launch.network.config.UrlConfig;
+import com.bee.launch.network.interceptor.CommonHeaderInterceptor;
 import com.bee.launch.network.interceptor.DebugNotFoundInterceptor;
 import com.bee.android.common.utils.CommonUtil;
 import com.bee.android.common.view.smartRefresh.CommonRefreshBeeHeader;
@@ -74,13 +76,16 @@ public class BaseApplication extends CommonApplication {
                 // 读取超时时间
                 .setReadTimeOut(60)
                 // 支持最大并发数
-                .setMaxRequests(6);
-        if (BuildConfig.DEBUG) {
+                .setMaxRequests(6)
+                .addInterceptor(new CommonHeaderInterceptor());
+        if (buildMode) {
             okConfig.addInterceptor(new DebugNotFoundInterceptor());
         }
 
+        // 初始化urlConfig
+        UrlConfig.initUrl(buildMode);
         // 构建默认的全局网络库
-        NetWorkManager.getInstance().initOkHttpClient(this, "");
+        NetWorkManager.getInstance().initOkHttpClient(this, UrlConfig.GCX_URL);
     }
 
     /**

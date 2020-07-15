@@ -1,0 +1,119 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="300dp"
+    android:height="300dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!--左车轮-->
+    <group
+        android:name="leftWheel"
+        android:pivotX="40"
+        android:pivotY="70">
+
+        <path
+            android:name="leftWheelAxle"
+            android:pathData="M 40,70 L23,80M 40,70 L40,50 M 40,70 L57,80"
+            android:strokeWidth="1"
+            android:strokeColor="@color/common_color_ffffff" />
+
+
+        <path
+            android:pathData="M 60,70 A 20,20,0,1,1,60,69 z"
+            android:strokeWidth="1"
+            android:strokeColor="@color/common_color_ffffff" />
+
+    </group>
+    <!--右车轮-->
+    <group
+        android:name="rightWheel"
+        android:pivotX="130"
+        android:pivotY="70">
+
+        <path
+            android:name="rightWheelAxle"
+            android:pathData="M 130,70 L113,80 M 130,70 L130,50 M 130,70 L147,80"
+            android:strokeWidth="1"
+            android:strokeColor="@color/common_color_ffffff" />
+
+        <path
+            android:pathData="M 150,70 A 20,20,0,1,1,150,69 z"
+            android:strokeWidth="1"
+            android:strokeColor="@color/common_color_ffffff" />
+    </group>
+    <!--车链盒子-->
+    <path
+        android:name="chainBox"
+        android:fillColor="@color/common_color_ffc200"
+        android:pathData="M 35,62 h54 v12 H35 z"
+        android:strokeWidth="1"
+        android:strokeColor="@color/common_color_ffffff" />
+    <!--车架-->
+    <path
+        android:pathData="M 50,69  L 65,40 L 80,69 M 86,65 L110,31
+        v 20 L130,70  "
+        android:strokeWidth="2"
+        android:strokeColor="@color/common_color_ffc200"
+        android:strokeLineJoin="round" />
+    <!--前车轮挡板-->
+    <path
+        android:pathData="M105,73 A 20,20,0,1,1,125,85"
+        android:strokeWidth="2"
+        android:strokeColor="@color/common_color_ffc200"
+        android:strokeLineJoin="round"
+        android:trimPathEnd="0.4" />
+    <!--车把-->
+    <path
+        android:pathData="M 110,31 V20 l -10,-4 h -3 M110,21  l -4,-10 h-3"
+        android:strokeWidth="2"
+        android:strokeColor="@color/common_color_ffffff"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!--车篮-->
+    <path
+        android:fillColor="@color/common_color_ffffff"
+        android:pathData="M 111,41 h 21 v -12 H 111 z"
+        android:strokeWidth="1"
+        android:strokeColor="@color/common_color_ffffff"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="round" />
+    <!--掘金LOGO-->
+    <path
+        android:fillColor="@color/common_color_ffc200"
+        android:pathData="M 121,30 L122,31 L121,32 L120,31 z"
+        android:strokeWidth="0.5"
+        android:strokeColor="@color/common_color_ffc200"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter" />
+    <path
+        android:pathData=" M119,33 L121,35,L123,33
+          M118,34 L121,37,L124,34"
+        android:strokeWidth="0.5"
+        android:strokeColor="@color/common_color_ffc200"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="miter" />
+    <!--皮座-->
+    <path
+        android:fillColor="@color/common_color_ffffff"
+        android:pathData="M 55,40 h 20 v-4 H56 v-3h-2"
+        android:strokeWidth="1"
+        android:strokeColor="@color/common_color_ffffff"
+        android:strokeLineCap="square"
+        android:strokeLineJoin="round" />
+    <!--脚踏板-->
+    <group
+        android:name="pedal"
+        android:pivotX="82"
+        android:pivotY="68">
+        <path
+            android:pathData="M 82,68  L 98,80"
+            android:strokeWidth="0.5"
+            android:strokeColor="@color/common_color_ffffff"
+            android:strokeLineCap="round" />
+
+        <path
+            android:fillColor="@color/common_color_ffffff"
+            android:pathData="M 96,80 A 2,2,0,1,1,96,81 z"
+            android:strokeWidth="1"
+            android:strokeColor="@color/common_color_ffffff" />
+    </group>
+</vector>

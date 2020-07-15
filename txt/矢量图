@@ -1,0 +1,53 @@
+矢量图 Vector Assert
+属性讲解：
+    width: 宽
+    height: 高
+    viewportWidth: 画布的宽
+    viewportHeight: 画布的高
+    path: 可以理解为路径，图片绘制的内容
+    fillColor：表示填充颜色
+    pathData：表示在图片上作画内容
+
+    pathData 属性的值是SVG的语法内容，常用命令：
+    「M x , y」：移动到坐标 （x, y）
+    「L x , y」：从当前位置画一条直线到指定位置（x, y）
+    「H x」 ：画一条长为 x 水平线
+    「V y」 ：画一条长为 y 垂直线
+    「Z」   ：闭合，连接终点和起点
+    「A rx, ry, xRotationAngle, radianFlag, sweepFlag, x, y」：画弧线，理解为椭圆的一部分， rx 和 ry 表示 x轴和 y轴半径，即椭圆的长短轴问题；
+                                                             xRotationAngle 表示 x轴旋转角度，radianFlag 0 表示取小弧度，1 表示取大弧度；
+                                                             sweepFlag 0 表示逆时针，1 表示顺时针画弧线；x 和 y 弧线的终点位置，起点位置为画
+                                                             笔所在的地方。
+    「C x1, y1, x2, y2, x3, y3」：三次贝塞尔曲线
+    「S x2, y2, x, y」：光滑三次贝塞尔曲线
+    「Q x1, y1, x2, y2」：二次贝塞尔曲线
+    「T x, y」 ：映射
+
+    ps：大写表示绝对坐标，小写表示相对坐标
+
+
+    path 标签的属性
+        name：路径名称，可在其他地方引用，例如矢量图动画引用
+        strokeWidth：线条宽度，单位为viewportHeight或viewportWidth中的1等分；
+        strokeColor：线条颜色
+        strokeAlpha：线条透明度 0f -- 1f
+        strokeLineJoin： 线条拐角的形状。圆角round、斜切尖角miter、斜角bevel、例如正方形的四个角
+        strokeLineCap：线条线帽形状，圆角round、正方形square、臂butt
+        strokeMiterLimit：斜线miter和strokeWidth的比例上限。如果比例值超过这个值，不再显示尖角而是bevel斜线。当然strokeLineJoin属性设置为miter才生效
+        fillColor：填充颜色
+        fillType：填充类型，取值类型：nonZero、evenOdd
+        fillAlpha：填充透明度
+        trimPathStart：从路径开始位置截取比率的内容，留下剩下的内容，0f--1f
+        trimPathEnd：从路径开始位置截取比率的内容，留下截取的内容，0f--1f
+        trimPathOffset：trimPathStart或trimPathEnd的偏移量 0f--1f
+
+    group 标签主要是将多个path标签组合起来，子标签也可以是group标签，其属性作用于所有子标签，包括
+        name：定义group标签名
+        translateX：X轴位移
+        translateY：Y轴位移
+        rotation：旋转
+        scaleX：X缩放
+        scaleY：Y缩放
+        pivotX：缩放与旋转参考点X
+        pivotY：缩放与旋转参考点Y
+

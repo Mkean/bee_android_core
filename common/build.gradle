@@ -109,6 +109,8 @@ dependencies {
 
     compileOnly rootProject.ext.dependencies["wechat-sdk-android-without-mta"]
 
+    api rootProject.ext.dependencies["mmkv"]
+
     //美团logan日志
     compileOnly rootProject.ext.dependencies["logan"]
 
