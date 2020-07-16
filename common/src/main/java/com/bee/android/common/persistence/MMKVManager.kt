@@ -35,7 +35,16 @@ object MMKVManager {
      */
     fun mmkvWithId_Path(mmapID: String, relativePath: String): MMKV? = MMKV.mmkvWithID(mmapID, relativePath)
 
+    /**
+     *如果业务需要多进程访问，采用这种方式创建实例
+     */
+    fun mmkvWithID_MULIT(mmapID: String): MMKV = MMKV.mmkvWithID(mmapID, MMKV.MULTI_PROCESS_MODE)
 
-
+    /**
+     *线上环境时候需要输出日志
+     */
+    fun registerHandler() {
+        MMKV.registerHandler(MMKVLog())
+    }
 
 }
