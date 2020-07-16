@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(":common")
+
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+
+    compileOnly rootProject.ext.dependencies["arouter-annotation"]
+    compileOnly rootProject.ext.dependencies["arouter-api"]
+    compileOnly rootProject.ext.dependencies["rxpermissions"]
+    compileOnly rootProject.ext.dependencies["rxjava"]
+    compileOnly rootProject.ext.dependencies["rxandroid"]
+    compileOnly rootProject.ext.dependencies["gson"]
+    compileOnly rootProject.ext.dependencies["retrofit"]
+
+    
+    compileOnly rootProject.ext.dependencies["eventBus"]
+    compileOnly rootProject.ext.dependencies["appcompat"]
+
+}

@@ -1,3 +1,4 @@
+include ':update'
 include ':app', ':common', ':launch'
 rootProject.name = "bee_android_core"
 
