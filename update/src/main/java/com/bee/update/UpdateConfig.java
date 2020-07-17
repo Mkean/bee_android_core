@@ -28,12 +28,16 @@ import com.bee.update.impl.DefaultUpdateNotifier;
 import com.bee.update.impl.ForcedUpdateStrategy;
 import com.bee.update.impl.WifiFirstStrategy;
 import com.bee.update.model.CheckEntity;
-import com.bee.update.model.Update;
 import com.bee.update.util.L;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * 此类用于提供一些默认使用的更新配置。
+ *
+ * <p>在进行更新任务时，当{@link UpdateBuilder} 中未设置对应的配置时，将从此配置类中读取默认的配置进行使用
+ */
 public class UpdateConfig {
     private final String TAG = "Update";
 

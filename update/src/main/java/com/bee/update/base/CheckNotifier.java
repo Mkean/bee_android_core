@@ -4,20 +4,32 @@ import android.app.Activity;
 import android.app.Dialog;
 
 import com.bee.update.UpdateBuilder;
+import com.bee.update.UpdateConfig;
 import com.bee.update.flow.Launcher;
+import com.bee.update.impl.DefaultUpdateNotifier;
 import com.bee.update.model.Update;
 import com.bee.update.util.ActivityManager;
 import com.bee.update.util.UpdatePreference;
 
 /**
  * 此为当检查到更新时的通知创建器基类
+ *
+ * <p>配置方式：通过{@link UpdateConfig#setCheckNotifier(CheckNotifier)}或者{@link UpdateBuilder#setCheckNotifier(CheckNotifier)}
+ *
+ * <p>默认实现 {@link DefaultUpdateNotifier}
+ *
+ * <p>触发逻辑：当检查到有新版本更新时且配置的更新策略{@link UpdateStrategy#isShowUpdateDialog(Update)} 设定为true时。此通知创建器会被触发
+ *
+ * <p>定制说明
+ *      1. 当需要进行后续跟新操作时（请求进行apk下载任务）：调用{@link #sendDownloadRequest()}<br>
+ *      2. 当需要取消此次更新操作时：调用{@link #sendUserCancel()}<br>
+ *      3. 当需要忽略此版本更新操作时：调用{@link #sendUserIgnore()}<br>
  */
 public abstract class CheckNotifier {
 
     protected UpdateBuilder builder;
     protected Update update;
     private CheckCallback callback;
-
     public final void setBuilder(UpdateBuilder builder) {
         this.builder = builder;
         this.callback = builder.getCheckCallback();
@@ -30,17 +42,17 @@ public abstract class CheckNotifier {
     /**
      * 创建一个Dialog用于通知用户当前有新版本需要更新。
      *
-     * <P>若需要展示的通知为非弹窗通知。如在通知栏进行通知，则再次创建通知栏通知，返回为null即可
+     * <p>若需要展示的通知为非弹窗通知。如在通知栏进行通知。则在此创建通知栏通知，返回为null即可。
      *
-     * <p>定制说明：</p>
-     * 1.当需要进行后续更新操作时（请求进行apk下载任务）：调用{@link #sendDownloadRequest()}
-     * 2.当需要取消此次更新操作时：调用{@link #sendUserCancel()}
-     * 3.当需要忽略此版本更新时：调用{@link #sendUserIgnore()}
+     * <p>定制说明：<br>
+     *     1. 当需要进行后续更新操作时(请求进行apk下载任务)：调用{@link #sendDownloadRequest()}<br>
+     *     2. 当需要取消此次更新操作时：调用{@link #sendUserCancel()}<br>
+     *     3. 当需要忽略此版本更新时：调用{@link #sendUserIgnore()}<br>
      *
-     * @param activity 顶部的Activity实例，通过{@link ActivityManager#topActivity};
+     * @param context 顶部的Activity实例。通过{@link ActivityManager#topActivity()}进行获取
      * @return 创建的Dialog实例。若当需要展示的不是弹窗时：返回null
      */
-    public abstract Dialog create(Activity activity);
+    public abstract Dialog create(Activity context);
 
     /**
      * 当需要进行后续更新操作时：需要更新，启动下载任务时，调用此方法进行流程连接

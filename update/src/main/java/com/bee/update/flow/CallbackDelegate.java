@@ -72,4 +72,8 @@ public class CallbackDelegate implements CheckCallback, DownloadCallback {
     public void onDownloadError(Throwable t) {
 
     }
+
+    public void setRestartHandler(RestartHandler restartHandler) {
+        this.restartHandler = restartHandler;
+    }
 }
