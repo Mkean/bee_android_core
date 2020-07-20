@@ -29,7 +29,7 @@ public class Update {
     /**
      * 指定是否要求进行强制更新，当设置为强制更新时，将会导致设置的更新策略无效，而直接使用框架内部所提供的{@link ForcedUpdateStrategy}进行更新策略管理
      *
-     * @param forced
+     * @param forced {@code true}代表此版本需要进行强制更新
      */
     public void setForced(boolean forced) {
         this.forced = forced;

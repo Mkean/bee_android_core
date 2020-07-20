@@ -10,6 +10,9 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+/**
+ * @Description: 埋点
+ */
 public class SensorsDataAPI {
 
     public final String TAG = this.getClass().getSimpleName();

@@ -41,8 +41,6 @@ public class BaseApplication extends CommonApplication {
     public static final int APP_STATUS_NORMAL = 1; // 表示应用正常启动的
     public static final int APP_STATUS = APP_STATUS_NORMAL; // 记录APP启动状态
 
-    public static LinkedList<Activity> store = new LinkedList<>();
-
     public NetworkStatusReceiver mNetworkStatusReceiver; // 用于监听网络改变
 
     public static boolean againShowUpdate = false; // 再次请求版本更新

@@ -1,9 +1,13 @@
 package com.bee.update.base;
 
+import com.bee.update.UpdateBuilder;
+import com.bee.update.UpdateConfig;
 import com.bee.update.model.Update;
 
 /**
  * 此类用于解析通过{@link CheckWorker}访问的地址返回的数据。解析出框架所需的{@link Update}实体类数据并提供给框架内部各处使用
+ *
+ * <p>配置方式：通过{@link UpdateConfig#setUpdateParser(UpdateParser)}或者{@link UpdateBuilder#setUpdateParser(UpdateParser)}
  */
 public abstract class UpdateParser {
 

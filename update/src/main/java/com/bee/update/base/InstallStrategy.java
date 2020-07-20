@@ -2,10 +2,17 @@ package com.bee.update.base;
 
 import android.content.Context;
 
+import com.bee.update.UpdateBuilder;
+import com.bee.update.UpdateConfig;
+import com.bee.update.impl.DefaultInstallStrategy;
 import com.bee.update.model.Update;
 
 /**
  * 提供一个安装策略。便于针对不同的应用场景，定制不同的安装策略实现
+ * <p>
+ * 配置方式：通过{@link UpdateConfig#setInstallStrategy(InstallStrategy)}或者{@link UpdateBuilder#setInstallStrategy(InstallStrategy)}
+ * <p>
+ * 默认实现：{@link DefaultInstallStrategy}
  */
 public abstract class InstallStrategy {
     /**

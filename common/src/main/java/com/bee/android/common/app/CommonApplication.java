@@ -1,5 +1,6 @@
 package com.bee.android.common.app;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
@@ -13,10 +14,12 @@ import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 
 import java.io.File;
+import java.util.LinkedList;
 
 public class CommonApplication extends Application {
 
     private static final String TAG = "BaseApplication";
+    public static LinkedList<Activity> store = new LinkedList<>();
 
     public static CommonApplication app;
 
