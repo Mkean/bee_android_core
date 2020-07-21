@@ -1,5 +1,7 @@
 package com.bee.update.model;
 
+import com.bee.update.UpdateBuilder;
+import com.bee.update.UpdateConfig;
 import com.bee.update.base.CheckWorker;
 
 import java.util.HashMap;
@@ -7,10 +9,11 @@ import java.util.Map;
 
 /**
  * 配置的更新api实体类，此实体类将被{@link CheckWorker}进行使用
+ * <p>
+ * 配置方式：通过{@link UpdateConfig#setCheckEntity(CheckEntity)}对复杂api数据进行定制; 或者{@link UpdateBuilder#setCheckEntity(CheckEntity)}对简单GET请求的更新api进行定制。
  */
 public class CheckEntity {
     private String method = "GET";
-
     private String url;
     private Map<String, String> params;
     private Map<String, String> headers;

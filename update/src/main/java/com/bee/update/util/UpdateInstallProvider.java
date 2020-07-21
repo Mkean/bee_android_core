@@ -8,9 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +22,6 @@ public class UpdateInstallProvider extends ContentProvider {
     static Map<Uri, File> mCache = new HashMap<>();
     Context applicationContext;
 
-
     @Override
     public boolean onCreate() {
         return false;
@@ -38,37 +34,33 @@ public class UpdateInstallProvider extends ContentProvider {
         ActivityManager.get().registerSelf(context);
     }
 
-    @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public String getType(@NonNull Uri uri) {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+    public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1) {
         return null;
     }
 
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+    public String getType(Uri uri) {
+        return null;
+    }
+
+    @Override
+    public Uri insert(Uri uri, ContentValues contentValues) {
+        return null;
+    }
+
+    @Override
+    public int delete(Uri uri, String s, String[] strings) {
         return 0;
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
         return 0;
     }
 
-    @Nullable
     @Override
-    public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
+    public ParcelFileDescriptor openFile(Uri uri, String mode) throws FileNotFoundException {
         File file = mCache.get(uri);
         final int fileMode = modeToMode(mode);
 
@@ -76,24 +68,27 @@ public class UpdateInstallProvider extends ContentProvider {
     }
 
     /**
-     * @param file   需要被安装的文件
+     * @param file 需要被安装的文件
      * @param author 标识信息
      * @return 被创建的uri
      */
-    public static Uri getUriByFile(File file, String author) {
+    public static Uri getUriByFile (File file, String author) {
         String path;
         try {
             path = file.getCanonicalPath();
         } catch (IOException e) {
             throw new IllegalArgumentException("Failed to resolve canonical path for " + file);
         }
-        Uri uri = new Uri.Builder().scheme("content")
+        Uri uri =  new Uri.Builder().scheme("content")
                 .authority(author).encodedPath(path).build();
-        mCache.put(uri, file);
+        mCache.put(uri,file);
 
         return uri;
     }
 
+    /**
+     * Copied from ContentResolver.java
+     */
     private static int modeToMode(String mode) {
         int modeBits;
         if ("r".equals(mode)) {

@@ -22,24 +22,27 @@ import com.bee.update.model.Update;
 public abstract class UpdateStrategy {
 
     /**
-     * 当通过 {@link UpdateChecker}检测到需要更新时。是否显示界面更新通知
+     * 当通过{@link UpdateChecker}检测到需要更新时。是否显示界面更新通知
      *
      * @param update 更新数据实体类
-     * @return {@code true} 代表需要显示更新，{@code false} 代表不显示更新通知，直接调起后续流程（启动apk文件下载任务）
+     * @return True代表需要显示更新。False代表不进行界面更新通知。直接调起后续流程(启动apk文件下载任务)
+     * @see CheckNotifier
      */
     public abstract boolean isShowUpdateDialog(Update update);
 
     /**
-     * 在使用{@link DownloadWorker} 执行文件下载任务时，是否显示界面进度条通知
+     * 在使用{@link DownloadWorker}执行文件下载任务时。是否显示界面进度条通知
      *
-     * @return {@code true} 显示 ，{@code false} 不显示
+     * @return True代表需要显示下载进度通知，
+     * @see DownloadNotifier
      */
     public abstract boolean isShowDownloadDialog();
 
     /**
-     * 下载完成后，跳过下载完成的界面通知，直接自动启动安装任务
+     * 是否在下载完成后。跳过下载完成的界面通知。直接自动启动安装任务
      *
-     * @return {@code true}代表将跳过展示apk下载完成的通知。自动进行安装。
+     * @return True代表将跳过展示apk下载完成的通知。自动进行安装。
+     * @see InstallNotifier
      */
     public abstract boolean isAutoInstall();
 }

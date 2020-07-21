@@ -5,6 +5,9 @@ import com.bee.update.impl.DefaultUpdateChecker;
 import com.bee.update.impl.DefaultUpdateNotifier;
 import com.bee.update.impl.ForcedUpdateStrategy;
 
+/**
+ * 此实体类用于存储框架所需的更新数据
+ */
 public class Update {
 
     private boolean forced;

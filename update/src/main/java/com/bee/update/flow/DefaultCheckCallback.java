@@ -22,7 +22,7 @@ public class DefaultCheckCallback implements CheckCallback {
     private UpdateBuilder builder;
     private CheckCallback callback;
 
-    public DefaultCheckCallback(UpdateBuilder builder) {
+    public void setBuilder(UpdateBuilder builder) {
         this.builder = builder;
         this.callback = builder.getCheckCallback();
     }

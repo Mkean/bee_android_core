@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#00ffffff" />
+            <corners android:radius="18.5dip" />
+        </shape>
+
+    </item>
+
+    <item android:id="@android:id/progress">
+
+        <scale
+            android:drawable="@drawable/common_progress"
+            android:scaleWidth="100%" />
+
+    </item>
+</layer-list>

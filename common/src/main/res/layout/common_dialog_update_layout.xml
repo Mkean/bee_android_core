@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/size_285dp"
+    android:layout_height="wrap_content">
+
+    <com.bee.android.common.view.shadow.ShadowClipConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_70dp"
+        android:background="@android:color/white"
+        android:paddingBottom="@dimen/size_25dp"
+        app:shadowRadius="@dimen/size_15dp">
+
+        <ImageView
+            android:id="@+id/bgIV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/common_dialog_update_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dialog_titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_25dp"
+            android:layout_marginTop="@dimen/size_25dp"
+            android:layout_marginRight="@dimen/size_25dp"
+            android:text="@string/common_new_version_title"
+            android:textColor="@color/common_color_222222"
+            android:textSize="@dimen/sp_17"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bgIV" />
+
+        <TextView
+            android:id="@+id/tv_version_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_25dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:textColor="@color/common_color_333333"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_titleTv" />
+
+        <TextView
+            android:id="@+id/tv_apk_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_25dp"
+            android:layout_marginTop="@dimen/size_5dp"
+            android:textColor="@color/common_color_333333"
+            android:textSize="@dimen/sp_13"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_version_name" />
+
+        <com.bee.android.common.view.MaxHeightScrollView
+            android:id="@+id/dialog_contentSc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_apk_size"
+            android:scrollbarThumbVertical="@drawable/common_bg_scroll_bar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:common_max_height="@dimen/size_110dp">
+
+            <TextView
+                android:id="@+id/dialog_contentTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_25dp"
+                android:paddingTop="@dimen/size_15dp"
+                android:paddingBottom="@dimen/size_5dp"
+                android:layout_marginRight="@dimen/size_25dp"
+                android:gravity="left|center"
+                android:textColor="@color/common_color_333333"
+                android:textSize="@dimen/sp_13"/>
+        </com.bee.android.common.view.MaxHeightScrollView>
+
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_37dp"
+            android:layout_marginLeft="@dimen/size_25dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:layout_marginRight="@dimen/size_25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_contentSc">
+
+            <LinearLayout
+                android:id="@+id/ll_btn_tips"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/ll_next"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/common_update_left"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="下次提醒"
+                        android:textColor="@color/common_color_333333"
+                        android:textSize="@dimen/sp_15" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_now"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/size_15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/common_update_right">
+
+                    <TextView
+                        android:id="@+id/tv_update_download_error"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="马上更新"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/sp_15" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.bee.android.common.view.shadow.ShadowClipRelativeLayout
+                android:id="@+id/update_corner_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/common_update_fr_bg"
+                android:visibility="gone"
+                app:shadowAlpha="0.65"
+                app:shadowRadius="18.5dip"
+                tools:visibility="visible">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/common_progress_update" />
+
+                <TextView
+                    android:id="@+id/tv_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/common_color_000000"
+                    android:textSize="@dimen/sp_15"
+                    android:visibility="visible" />
+
+            </com.bee.android.common.view.shadow.ShadowClipRelativeLayout>
+
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_status_net"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:gravity="center"
+            android:textColor="@color/common_color_333333"
+            android:textSize="@dimen/sp_11"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frame_container" />
+
+    </com.bee.android.common.view.shadow.ShadowClipConstraintLayout>
+
+    <ImageView
+        android:layout_width="@dimen/size_134dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/common_dialog_update_top" />
+</RelativeLayout>

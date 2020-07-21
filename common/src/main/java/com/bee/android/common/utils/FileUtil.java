@@ -238,7 +238,7 @@ public class FileUtil {
      * @return
      */
     @SuppressLint("NewApi")
-    private static long getAvailableExternalMemorySize() {
+    public static long getAvailableExternalMemorySize() {
         if (isSdcardExits()) {
             File path = Environment.getExternalStorageDirectory();
             StatFs stat = new StatFs(path.getPath());

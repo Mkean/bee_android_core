@@ -14,7 +14,7 @@ import java.io.File;
  * <p>
  * 默认实现：{@link DefaultRestartHandler}
  */
-public class RestartHandler implements CheckCallback, DownloadCallback {
+public abstract class RestartHandler implements CheckCallback, DownloadCallback {
 
     protected UpdateBuilder builder;
     protected long retryTime;// 重启间隔

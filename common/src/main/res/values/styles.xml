@@ -45,7 +45,8 @@
     </style>
 
     <style name="common_Loading.more_AppCompat.ProgressBar" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:indeterminateDrawable">@drawable/common_progress_small_loading_more</item>
+        <item name="android:indeterminateDrawable">@drawable/common_progress_small_loading_more
+        </item>
         <item name="android:minWidth">16dip</item>
         　　
         <item name="android:maxWidth">16dip</item>
@@ -65,5 +66,9 @@
         <attr name="loginView" format="reference" />
         <attr name="errorFromMyView" format="reference" />
 
+    </declare-styleable>
+
+    <declare-styleable name="Common_MaxHeightScrollView">
+        <attr name="common_max_height" format="reference" />
     </declare-styleable>
 </resources>
