@@ -1,6 +1,6 @@
 package com.bee.update.flow;
 
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.UpdateBuilder;
 import com.bee.update.base.CheckWorker;
 import com.bee.update.base.DownloadWorker;

@@ -2,7 +2,7 @@ package com.bee.update;
 
 import android.text.TextUtils;
 
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.base.CheckCallback;
 import com.bee.update.base.CheckNotifier;
 import com.bee.update.base.CheckWorker;

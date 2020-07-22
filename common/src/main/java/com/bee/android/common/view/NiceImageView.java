@@ -23,7 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bee.android.common.R;
-import com.bee.android.common.utils.ScreenUtil;
+import com.bee.core.utils.ScreenUtil;
 
 /**
  * 圆角图片view

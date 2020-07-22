@@ -2,42 +2,37 @@ package com.bee.update;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import com.bee.android.common.app.CommonApplication;
+import com.bee.android.common.base.CommonApplication;
 import com.bee.android.common.bean.UpdateBean;
 import com.bee.android.common.dialog.BaseDialog;
 import com.bee.android.common.dialog.DialogManager;
 import com.bee.android.common.dialog.UpdateApkDialog;
 import com.bee.android.common.event.UpdateSuggestAuthorizeEvent;
-import com.bee.android.common.logger.CommonLogger;
-import com.bee.android.common.manager.CommonFileManager;
+import com.bee.core.logger.CommonLogger;
+import com.bee.core.manager.CommonFileManager;
 import com.bee.android.common.permission.PermissionUtils;
-import com.bee.android.common.permission.config.PermissionStr;
-import com.bee.android.common.utils.AppUtils;
-import com.bee.android.common.utils.CommonUtil;
-import com.bee.android.common.utils.FileUtil;
-import com.bee.android.common.utils.NotificationsUtils;
-import com.bee.android.common.utils.StringUtils;
-import com.bee.android.common.utils.ToastUtils;
+import com.bee.core.permission.config.PermissionStr;
+import com.bee.core.utils.AppUtils;
+import com.bee.core.utils.CommonUtil;
+import com.bee.core.utils.FileUtil;
+import com.bee.core.utils.NotificationsUtils;
+import com.bee.core.utils.StringUtils;
+import com.bee.core.utils.ToastUtils;
 import com.bee.update.base.DownloadCallback;
 import com.bee.update.flow.Launcher;
 import com.bee.update.impl.DefaultDownloadWorker;
-import com.bee.update.impl.DefaultInstallStrategy;
 import com.bee.update.model.Update;
 import com.bee.update.update.AllDialogShowStrategy;
 import com.bee.update.update.CustomApkFileCreator;
@@ -60,7 +55,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.http.Url;
 
 
 /**

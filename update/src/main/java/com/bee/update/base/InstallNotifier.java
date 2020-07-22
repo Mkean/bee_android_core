@@ -3,7 +3,7 @@ package com.bee.update.base;
 import android.app.Activity;
 import android.app.Dialog;
 
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.UpdateBuilder;
 import com.bee.update.UpdateConfig;
 import com.bee.update.impl.DefaultInstallNotifier;

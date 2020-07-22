@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 
 import com.bee.android.common.R;
-import com.bee.android.common.utils.ScreenUtil;
+import com.bee.core.utils.ScreenUtil;
 
 import java.util.HashMap;
 import java.util.Map;

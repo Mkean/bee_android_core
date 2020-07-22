@@ -1,7 +1,7 @@
 package com.bee.update.update;
 
-import com.bee.android.common.app.CommonApplication;
-import com.bee.android.common.manager.CommonFileManager;
+import com.bee.android.common.base.CommonApplication;
+import com.bee.core.manager.CommonFileManager;
 import com.bee.update.base.FileCreator;
 import com.bee.update.impl.DefaultFileCreator;
 import com.bee.update.model.Update;

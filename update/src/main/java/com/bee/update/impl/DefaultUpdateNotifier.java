@@ -5,7 +5,7 @@ import android.app.Dialog;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.base.CheckNotifier;
 import com.bee.update.util.SafeDialogHandle;
 

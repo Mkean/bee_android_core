@@ -1,6 +1,5 @@
 package com.bee.update.base;
 
-import com.bee.android.common.logger.CommonLogger;
 import com.bee.update.UpdateBuilder;
 import com.bee.update.impl.DefaultRestartHandler;
 import com.bee.update.model.Update;

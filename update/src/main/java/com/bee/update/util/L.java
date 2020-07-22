@@ -1,6 +1,7 @@
 package com.bee.update.util;
 
-import com.bee.android.common.logger.CommonLogger;
+
+import com.bee.core.logger.CommonLogger;
 
 /**
  * 统一日志打印

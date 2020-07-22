@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.base.UpdateChecker;
 import com.bee.update.model.Update;
 import com.bee.update.util.ActivityManager;

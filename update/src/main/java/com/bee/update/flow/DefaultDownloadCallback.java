@@ -3,8 +3,8 @@ package com.bee.update.flow;
 import android.app.Activity;
 import android.app.Dialog;
 
-import com.bee.android.common.app.CommonApplication;
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.android.common.base.CommonApplication;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.UpdateBuilder;
 import com.bee.update.base.DownloadCallback;
 import com.bee.update.base.DownloadWorker;

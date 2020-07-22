@@ -12,7 +12,7 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.base.DownloadCallback;
 import com.bee.update.base.DownloadNotifier;
 import com.bee.update.model.Update;

@@ -3,9 +3,8 @@ package com.bee.update.impl;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.widget.ProgressBar;
 
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.base.DownloadCallback;
 import com.bee.update.base.DownloadNotifier;
 import com.bee.update.model.Update;

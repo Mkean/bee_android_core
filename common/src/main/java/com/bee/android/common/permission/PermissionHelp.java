@@ -7,12 +7,13 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.bee.android.common.R;
-import com.bee.android.common.app.CommonApplication;
+import com.bee.android.common.base.CommonApplication;
 import com.bee.android.common.dialog.BaseDialog;
 import com.bee.android.common.dialog.DialogManager;
-import com.bee.android.common.permission.config.PermissionStr;
-import com.bee.android.common.permission.request.BaseRequest;
+import com.bee.core.R;
+import com.bee.core.permission.PermissionDeal;
+import com.bee.core.permission.config.PermissionStr;
+import com.bee.core.permission.request.BaseRequest;
 
 import java.util.ArrayList;
 import java.util.List;

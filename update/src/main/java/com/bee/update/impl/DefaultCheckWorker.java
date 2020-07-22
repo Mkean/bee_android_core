@@ -2,7 +2,7 @@ package com.bee.update.impl;
 
 import android.annotation.SuppressLint;
 
-import com.bee.android.common.logger.CommonLogger;
+import com.bee.core.logger.CommonLogger;
 import com.bee.update.UpdateBuilder;
 import com.bee.update.UpdateConfig;
 import com.bee.update.base.CheckWorker;

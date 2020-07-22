@@ -1,5 +1,6 @@
 package com.bee.android.common.dialog
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.SpannableString
@@ -40,6 +41,7 @@ class TitleContentWrapTwoButtonDialog : BaseDialog, View.OnClickListener {
         this.listener = listener
     }
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.common_dialog_title_content_wrap_two_button_layout)
@@ -53,7 +55,7 @@ class TitleContentWrapTwoButtonDialog : BaseDialog, View.OnClickListener {
             window!!.attributes = params
         }
 
-        contentTv.highlightColor = context.resources.getColor(R.color.common_color_transparent)
+        contentTv.highlightColor = context.getColor(R.color.common_color_transparent)
         titleTv.text = title
         if (!TextUtils.isEmpty(content)) {
             contentTv.text = content

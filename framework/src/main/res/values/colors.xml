@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ResourceName">
+    <color name="chn_colorPrimary">#008577</color>
+    <color name="chn_colorPrimaryDark">#00574B</color>
+    <color name="chn_colorAccent">#D81B60</color>
+
+    <color name="chn_color_transparent">#00000000</color>
+
+    <color name="chn_color_008577">#008577</color>
+
+    <color name="chn_color_black_ff000000">#ff000000</color>
+    <color name="chn_color_black_0C100F">#0C100F</color>
+    <color name="chn_color_black_999999">#999999</color>
+
+    <color name="chn_color_red_FFFFC39E">#FFFFC39E</color>
+    <color name="chn_color_red_FF8443">#FF8443</color>
+    <color name="chn_color_FFBD41">#FFBD41</color>
+    <color name="chn_color_FFBE38">#FFBE38</color>
+
+    <color name="chn_color_222222">#222222</color>
+    <color name="chn_color_666666">#666666</color>
+    <color name="chn_color_414042">#414042</color>
+    <color name="chn_color_999999">#999999</color>
+    <color name="chn_color_403F41">#403F41</color>
+    <color name="chn_color_f0f0f0">#f0f0f0</color>
+    <color name="chn_color_C6C6C6">#C6C6C6</color>
+    <color name="chn_base_000000">#bb000000</color>
+
+    <color name="chn_color_ffffff">#ffffff</color>
+    <color name="chn_color_FFA38E">#FFA38E</color>
+    <color name="chn_color_F6AF28">#F6AF28</color>
+    <color name="chn_color_66222222">#66222222</color>
+    <color name="chn_color_A6222222">#A6222222</color>
+    <color name="chn_color_A6000000">#A6000000</color>
+    <color name="chn_color_33FFBAAB">#33FFBAAB</color>
+    <color name="chn_color_F96341">#F96341</color>
+    <color name="course_color_cccccc">#CCCCCC</color>
+    <color name="chn_color_ff8a66">#ff8a66</color>
+    <color name="default_shadow_color" >#88757575</color>
+    <color name="chn_color_D9D9D9">#80D9D9D9</color>
+    <color name="chn_color_33394c">#33394c</color>
+    <color name="chn_base_0F77FA" >#0F77FA</color>
+    <color name="chn_color_f76561">#f76561</color>
+    <color name="chn_color_FFBEAF">#FFBEAF</color>
+    <color name="chn_color_FF9482">#FF9482</color>
+    <color name="chn_color_FFCEBF">#FFCEBF</color>
+    <color name="chn_color_FF524E">#FF524E</color>
+    <color name="chn_color_E7E7E7">#E7E7E7</color>
+    <color name="chn_color_00C1DE">#00C1DE</color>
+    <color name="chn_color_379DF2">#379DF2</color>
+    <color name="chn_base_a0a63b">#A0A6B3</color>
+    <color name="chn_base_fafafa">#fafafa</color>
+    <color name="chn_base_FFF3EC">#FFF3EC</color>
+    <color name="chn_color_58E2A9">#58E2A9</color>
+    <color name="chn_color_4d000000">#4d000000</color>
+    <color name="chn_color_40000000">#40000000</color>
+    <color name="chn_color_F7F7F7">#F7F7F7</color>
+    <color name="chn_color_EAEAEA">#EAEAEA</color>
+    <color name="chn_color_FCD592">#FCD592</color>
+    <color name="chn_color_F1F1F1">#F1F1F1</color>
+    <color name="chn_color_FFC52D">#FFC52D</color>
+    <color name="chn_color_F4F3F3">#F4F3F3</color>
+    <color name="chn_color__black_1A1B1A">#1A1B1A</color>
+
+
+    <!--白色透明-->
+    <color name="chn_white_trans_50">#80FFFFFF</color>
+    <color name="chn_white_trans_80">#CCFFFFFF</color>
+
+    <!--黑色透明-->
+    <color name="chn_black_trans_100">#FF000000</color>
+    <color name="chn_black_trans_99">#FC000000</color>
+    <color name="chn_black_trans_98">#FA000000</color>
+    <color name="chn_black_trans_97">#F7000000</color>
+    <color name="chn_black_trans_96">#F5000000</color>
+    <color name="chn_black_trans_95">#F2000000</color>
+    <color name="chn_black_trans_94">#F0000000</color>
+    <color name="chn_black_trans_93">#ED000000</color>
+    <color name="chn_black_trans_92">#EB000000</color>
+    <color name="chn_black_trans_91">#E8000000</color>
+    <color name="chn_black_trans_90">#E6000000</color>
+    <color name="chn_black_trans_89">#E3000000</color>
+    <color name="chn_black_trans_88">#E0000000</color>
+    <color name="chn_black_trans_87">#DE000000</color>
+    <color name="chn_black_trans_86">#DB000000</color>
+    <color name="chn_black_trans_85">#D9000000</color>
+    <color name="chn_black_trans_84">#D6000000</color>
+    <color name="chn_black_trans_83">#D4000000</color>
+    <color name="chn_black_trans_82">#D1000000</color>
+    <color name="chn_black_trans_81">#CF000000</color>
+    <color name="chn_black_trans_80">#CC000000</color>
+    <color name="chn_black_trans_79">#C9000000</color>
+    <color name="chn_black_trans_78">#C7000000</color>
+    <color name="chn_black_trans_77">#C4000000</color>
+    <color name="chn_black_trans_76">#C3000000</color>
+    <color name="chn_black_trans_75">#BF000000</color>
+    <color name="chn_black_trans_74">#BD000000</color>
+    <color name="chn_black_trans_73">#BA000000</color>
+    <color name="chn_black_trans_72">#B8000000</color>
+    <color name="chn_black_trans_71">#B5000000</color>
+    <color name="chn_black_trans_69">#B0000000</color>
+    <color name="chn_black_trans_68">#AD000000</color>
+    <color name="chn_black_trans_67">#AB000000</color>
+    <color name="chn_black_trans_66">#A8000000</color>
+    <color name="chn_black_trans_65">#A6000000</color>
+    <color name="chn_black_trans_64">#A3000000</color>
+    <color name="chn_black_trans_63">#A1000000</color>
+    <color name="chn_black_trans_62">#9E000000</color>
+    <color name="chn_black_trans_61">#9C000000</color>
+    <color name="chn_black_trans_60">#99000000</color>
+    <color name="chn_black_trans_59">#96000000</color>
+    <color name="chn_black_trans_57">#94000000</color>
+    <color name="chn_black_trans_56">#91000000</color>
+    <color name="chn_black_trans_55">#8C000000</color>
+    <color name="chn_black_trans_54">#8A000000</color>
+    <color name="chn_black_trans_53">#87000000</color>
+    <color name="chn_black_trans_52">#85000000</color>
+    <color name="chn_black_trans_51">#82000000</color>
+    <color name="chn_black_trans_50">#80000000</color>
+    <color name="chn_black_trans_40">#66000000</color>
+    <color name="chn_black_trans_30">#4D000000</color>
+    <color name="chn_black_trans_20">#33000000</color>
+    <color name="chn_black_trans_10">#1A000000</color>
+    <color name="chn_black_trans_00">#00000000</color>
+    <color name="chn_color_F8F8F8">#F8F8F8</color>
+    <color name="chn_color_FFDD4A">#FFDD4A</color>
+    <color name="chn_color_33FFDD4A">#33FFDD4A</color>
+    <color name="chn_color_e5e5e5">#e5e5e5</color>
+    <color name="chn_color_343230">#343230</color>
+    <color name="chn_color_FFCC1F">#FFCC1F</color>
+    <color name="chn_color_AEAEAE">#AEAEAE</color>
+    <color name="course_color_1AAEAEAE">#1AAEAEAE</color>
+    <color name="course_color_1A666666">#1A666666</color>
+    <color name="chn_color_33F96341">#33F96341</color>
+    <color name="chn_color_f5f5f5">#f5f5f5</color>
+    <color name="chn_color_ff8443">#ff8443</color>
+    <color name="chn_color_80FF8443">#80FF8443</color>
+    <color name="chn_color_80FFb12b">#80FFb12b</color>
+    <color name="chn_color_FFB12B">#FFb12b</color>
+    <color name="chn_color_6b8cf8">#6b8cf8</color>
+    <color name="chn_color_ffde68">#ffde68</color>
+    <color name="chn_color_888888">#888888</color>
+    <color name="chn_color_cde5e5e5">#cde5e5e5</color>
+    <color name="chn_color_ff6a3c">#ff6a3c</color>
+    <color name="chn_color_f0b412">#f0b412</color>
+    <color name="chn_color_fc987949">#fc987949</color>
+    <color name="chn_color_ffc730">#ffc730</color>
+    <color name="chn_color_fdcb45">#fdcb45</color>
+    <color name="chn_color_ff3f40">#FF3F40</color>
+    <color name="chn_color_f9f2bc">#F9F2BC</color>
+    <color name="chn_color_F4f4f4">#F4f4f4</color>
+    <color name="chn_color_fafafa">#fafafa</color>
+
+
+</resources>

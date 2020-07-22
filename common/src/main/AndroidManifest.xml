@@ -43,6 +43,17 @@
             android:theme="@android:style/Theme.Translucent" />
         <!--weChat pay sdk end-->
 
+        <!--头条屏幕适配-->
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375dp" />
+
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="667dp" />
+        <!--头条屏幕适配-->
+
+
     </application>
 
 

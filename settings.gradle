@@ -1,5 +1,4 @@
-include ':update'
-include ':app', ':common', ':launch'
+include ':app', ':common', ':launch', ':update', ':framework'
 rootProject.name = "bee_android_core"
 
 project(':launch').projectDir = new File('busniess/launch')

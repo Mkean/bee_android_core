@@ -2,9 +2,9 @@ package com.bee.update.impl;
 
 import android.text.TextUtils;
 
-import com.bee.android.common.app.CommonApplication;
-import com.bee.android.common.logger.CommonLogger;
-import com.bee.android.common.manager.CommonFileManager;
+import com.bee.android.common.base.CommonApplication;
+import com.bee.core.logger.CommonLogger;
+import com.bee.core.manager.CommonFileManager;
 import com.bee.update.UpdateBuilder;
 import com.bee.update.UpdateConfig;
 import com.bee.update.base.DownloadWorker;
@@ -87,7 +87,7 @@ public class DefaultDownloadWorker extends DownloadWorker {
         int length;
         long start = System.currentTimeMillis();
         try {
-            while ((length = inputStream.read(buffer)) != -1 && offset <= contentLength && downloadflag) {
+            while ((length = inputStream.read(buffer)) != -1 && offset <= contentLength && downloadFlag) {
                 writer.write(buffer, 0, length);
                 offset += length;
                 long end = System.currentTimeMillis();
@@ -97,13 +97,13 @@ public class DefaultDownloadWorker extends DownloadWorker {
                 }
             }
 
-            if (!downloadflag) {
+            if (!downloadFlag) {
                 CommonLogger.d(TAG, "双击退出移除网络下载");
                 sendDownloadError(new IOException());
                 return;
             }
 
-            downloadflag = false;
+            downloadFlag = false;
         } catch (IOException e) {
             this.e = e;
             CommonLogger.d(TAG, "已下载到：" + offset);

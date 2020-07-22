@@ -2,16 +2,15 @@ package com.bee.update.base;
 
 import android.text.TextUtils;
 
-import com.bee.android.common.app.CommonApplication;
+import com.bee.android.common.base.CommonApplication;
 import com.bee.android.common.event.ApkInstallEvent;
-import com.bee.android.common.logger.CommonLogger;
-import com.bee.android.common.manager.CommonFileManager;
-import com.bee.android.common.utils.AppUtils;
-import com.bee.android.common.utils.CommonUtil;
-import com.bee.android.common.utils.FileUtil;
+import com.bee.core.logger.CommonLogger;
+import com.bee.core.manager.CommonFileManager;
+import com.bee.core.utils.AppUtils;
+import com.bee.core.utils.CommonUtil;
+import com.bee.core.utils.FileUtil;
 import com.bee.update.UpdateBuilder;
 import com.bee.update.flow.DefaultDownloadCallback;
-import com.bee.update.impl.DefaultDownloadWorker;
 import com.bee.update.model.Update;
 import com.bee.update.util.Utils;
 
