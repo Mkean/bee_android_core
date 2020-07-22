@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.graphics.ColorUtils;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -32,7 +33,6 @@ import java.util.regex.Pattern;
 public class StatusBarUtil {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
-
     private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.framework_statusbarutil_fake_status_bar_view;
     private static final int FAKE_TRANSLUCENT_VIEW_ID = R.id.framework_statusbarutil_translucent_view;
     private static final int TAG_KEY_HAVE_SET_OFFSET = -123;
@@ -44,18 +44,7 @@ public class StatusBarUtil {
      * @param color    状态栏颜色值
      */
     public static void setColor(Activity activity, @ColorInt int color) {
-        // 如果亮色，设置状态栏文字为黑色
-        if (isLightColor(color)) {
-            darkMode(activity, true);//亮色改为灰色
-        } else {
-            darkMode(activity, false);//状态栏颜色是深色改为白色
-
-        }
-        setColor(activity, color, 0);//设置为不透明
-    }
-
-    private static boolean isLightColor(@ColorInt int color) {
-        return ColorUtils.calculateLuminance(color) >= 0.5;
+        setColor(activity, color, DEFAULT_STATUS_BAR_ALPHA);
     }
 
     /**
@@ -84,16 +73,6 @@ public class StatusBarUtil {
                 decorView.addView(createStatusBarView(activity, color, statusBarAlpha));
             }
             setRootView(activity);
-        }
-    }
-
-    public static void setFullScreen(Activity activity) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = activity.getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
     }
 
@@ -540,6 +519,64 @@ public class StatusBarUtil {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    public static void setLightMode(Activity activity) {
+        setMIUIStatusBarDarkIcon(activity, true);
+        setMeizuStatusBarDarkIcon(activity, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public static void setDarkMode(Activity activity) {
+        setMIUIStatusBarDarkIcon(activity, false);
+        setMeizuStatusBarDarkIcon(activity, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+    }
+
+    /**
+     * 修改 MIUI V6  以上状态栏颜色
+     */
+    private static void setMIUIStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon) {
+        Class<? extends Window> clazz = activity.getWindow().getClass();
+        try {
+            Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+            Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+            int darkModeFlag = field.getInt(layoutParams);
+            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+            extraFlagField.invoke(activity.getWindow(), darkIcon ? darkModeFlag : 0, darkModeFlag);
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+    }
+
+    /**
+     * 修改魅族状态栏字体颜色 Flyme 4.0
+     */
+    private static void setMeizuStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon) {
+        try {
+            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+            Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+            Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
+            darkFlag.setAccessible(true);
+            meizuFlags.setAccessible(true);
+            int bit = darkFlag.getInt(null);
+            int value = meizuFlags.getInt(lp);
+            if (darkIcon) {
+                value |= bit;
+            } else {
+                value &= ~bit;
+            }
+            meizuFlags.setInt(lp, value);
+            activity.getWindow().setAttributes(lp);
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -694,202 +731,5 @@ public class StatusBarUtil {
         green = (int) (green * a + 0.5);
         blue = (int) (blue * a + 0.5);
         return 0xff << 24 | red << 16 | green << 8 | blue;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    //<editor-fold desc="DarkMode">
-    public static void darkMode(Activity activity, boolean dark) {
-        if (isFlyme4Later()) {
-            darkModeForFlyme4(activity.getWindow(), dark);
-        } else if (isMIUI6Later()) {
-            darkModeForMIUI6(activity.getWindow(), dark);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            darkModeForM(activity.getWindow(), dark);
-        }
-    }
-
-    public static int DEFAULT_COLOR = 0;
-    public static float DEFAULT_ALPHA = 0;//Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 0.2f : 0.3f;
-
-    /**
-     * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
-     */
-    public static void darkMode(Activity activity) {
-        darkMode(activity.getWindow(), DEFAULT_COLOR, DEFAULT_ALPHA);
-    }
-
-    public static void darkMode(Activity activity, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        darkMode(activity.getWindow(), color, alpha);
-    }
-
-    /**
-     * 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)
-     */
-    public static void darkMode(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (isFlyme4Later()) {
-            darkModeForFlyme4(window, true);
-            immersive(window, color, alpha);
-        } else if (isMIUI6Later()) {
-            darkModeForMIUI6(window, true);
-            immersive(window, color, alpha);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            darkModeForM(window, true);
-            immersive(window, color, alpha);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
-        }
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//        } else if (Build.VERSION.SDK_INT >= 19) {
-//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
-
-//        setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
-    }
-
-    //------------------------->
-
-    /**
-     * android 6.0设置字体颜色
-     */
-    private static void darkModeForM(Window window, boolean dark) {
-//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window.setStatusBarColor(Color.TRANSPARENT);
-
-        int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
-        if (dark) {
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        } else {
-            systemUiVisibility &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        }
-        window.getDecorView().setSystemUiVisibility(systemUiVisibility);
-    }
-
-    /**
-     * 设置Flyme4+的darkMode,darkMode时候字体颜色及icon变黑
-     * http://open-wiki.flyme.cn/index.php?title=Flyme%E7%B3%BB%E7%BB%9FAPI
-     */
-    public static boolean darkModeForFlyme4(Window window, boolean dark) {
-        boolean result = false;
-        if (window != null) {
-            try {
-                WindowManager.LayoutParams e = window.getAttributes();
-                Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
-                Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
-                darkFlag.setAccessible(true);
-                meizuFlags.setAccessible(true);
-                int bit = darkFlag.getInt(null);
-                int value = meizuFlags.getInt(e);
-                if (dark) {
-                    value |= bit;
-                } else {
-                    value &= ~bit;
-                }
-
-                meizuFlags.setInt(e, value);
-                window.setAttributes(e);
-                result = true;
-            } catch (Exception var8) {
-                Log.e("StatusBar", "darkIcon: failed");
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * 设置MIUI6+的状态栏是否为darkMode,darkMode时候字体颜色及icon变黑
-     * http://dev.xiaomi.com/doc/p=4769/
-     */
-    public static boolean darkModeForMIUI6(Window window, boolean darkmode) {
-        Class<? extends Window> clazz = window.getClass();
-        try {
-            int darkModeFlag = 0;
-            Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
-            Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-            darkModeFlag = field.getInt(layoutParams);
-            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-            extraFlagField.invoke(window, darkmode ? darkModeFlag : 0, darkModeFlag);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * 判断是否Flyme4以上
-     */
-    public static boolean isFlyme4Later() {
-        return Build.FINGERPRINT.contains("Flyme_OS_4")
-                || Build.VERSION.INCREMENTAL.contains("Flyme_OS_4")
-                || Pattern.compile("Flyme OS [4|5]", Pattern.CASE_INSENSITIVE).matcher(Build.DISPLAY).find();
-    }
-
-    /**
-     * 判断是否为MIUI6以上
-     */
-    public static boolean isMIUI6Later() {
-        try {
-            Class<?> clz = Class.forName("android.os.SystemProperties");
-            Method mtd = clz.getMethod("get", String.class);
-            String val = (String) mtd.invoke(null, "ro.miui.ui.version.name");
-            val = val.replaceAll("[vV]", "");
-            int version = Integer.parseInt(val);
-            return version >= 6;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    //</editor-fold>
-    public static void immersive(Window window, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(mixtureColor(color, alpha));
-
-            int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            window.getDecorView().setSystemUiVisibility(systemUiVisibility);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            setTranslucentView((ViewGroup) window.getDecorView(), color, alpha);
-        } else if (Build.VERSION.SDK_INT >= 16) {
-            int systemUiVisibility = window.getDecorView().getSystemUiVisibility();
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            window.getDecorView().setSystemUiVisibility(systemUiVisibility);
-        }
-    }
-
-    /**
-     * 创建假的透明栏
-     */
-    public static void setTranslucentView(ViewGroup container, int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        if (Build.VERSION.SDK_INT >= 19) {
-            int mixtureColor = mixtureColor(color, alpha);
-            View translucentView = container.findViewById(android.R.id.custom);
-            if (translucentView == null && mixtureColor != 0) {
-                translucentView = new View(container.getContext());
-                translucentView.setId(android.R.id.custom);
-                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(container.getContext()));
-                container.addView(translucentView, lp);
-            }
-            if (translucentView != null) {
-                translucentView.setBackgroundColor(mixtureColor);
-            }
-        }
-    }
-
-    public static int mixtureColor(int color, @FloatRange(from = 0.0, to = 1.0) float alpha) {
-        int a = (color & 0xff000000) == 0 ? 0xff : color >>> 24;
-        return (color & 0x00ffffff) | (((int) (a * alpha)) << 24);
     }
 }
