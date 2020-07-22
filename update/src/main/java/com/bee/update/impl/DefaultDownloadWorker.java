@@ -30,7 +30,7 @@ public class DefaultDownloadWorker extends DownloadWorker {
     private File original;
     private File bak;
     private long contentLength;
-    public static volatile boolean downloadflag;
+    public static volatile boolean downloadFlag;
     IOException e;
 
     @Override

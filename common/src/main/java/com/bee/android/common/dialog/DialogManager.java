@@ -77,11 +77,12 @@ public class DialogManager {
      * @param right
      * @param listener
      */
-    public void showTitleContentStrTwoButtonDialog(Context context, String title, String content,
-                                                   String left, String right, BaseDialog.ActionListener listener) {
+    public BaseDialog showTitleContentStrTwoButtonDialog(Context context, String title, String content,
+                                                         String left, String right, BaseDialog.ActionListener listener) {
         baseDismiss();
         baseDialog = new TitleContentWrapTwoButtonDialog(context, title, content, left, right, listener);
         baseDialog.show();
+        return baseDialog;
     }
 
     /**
