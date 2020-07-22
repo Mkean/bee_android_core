@@ -1,5 +1,6 @@
 package com.bee.core.utils.statusbar;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -25,6 +26,7 @@ public class StatusBarCompat {
     private static final String TAG_MARGIN_ADDED = "marginAdded";
 
 
+    @SuppressLint("ObsoleteSdkInt")
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static void setFitsSystemWindows(Window window, boolean fitSystemWindows) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
