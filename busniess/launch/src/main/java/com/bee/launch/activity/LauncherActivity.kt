@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit
 
 /**
  *@Description:
+ *
+ * TODO:有误
  */
 @Route(path = LAUNCH_LAUNCHER)
 class LauncherActivity : AppCompatActivity(), CancelAdapt {
