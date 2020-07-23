@@ -78,6 +78,25 @@
 
     </declare-styleable>
 
+    <declare-styleable name="CommonBannerIndicator">
+        <!--指示器间隔-->
+        <attr name="common_gap" format="dimension" />
+        <!--指示器宽度-->
+        <attr name="common_slider_width" format="dimension" />
+        <!--指示器高度-->
+        <attr name="common_slider_height" format="dimension" />
+
+        <attr name="common_select_color" format="color|reference" />
+        <attr name="common_unSelect_color" format="color|reference" />
+        <!--指示器大小变化方向-->
+        <attr name="common_slider_align" format="enum">
+            <enum name="Center" value="0" />
+            <enum name="Left" value="1" />
+            <enum name="Right" value="2" />
+        </attr>
+
+    </declare-styleable>
+
     <!--仿iOS的SwitchButton-->
     <declare-styleable name="common_SwitchButton">
         <attr name="common_shadow_radius" format="reference|dimension" />
