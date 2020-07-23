@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在 6.0 系统上的层叠窗口权限 -->
 
     <application>
 
@@ -46,11 +47,11 @@
         <!--头条屏幕适配-->
         <meta-data
             android:name="design_width_in_dp"
-            android:value="375dp" />
+            android:value="375" />
 
         <meta-data
             android:name="design_height_in_dp"
-            android:value="667dp" />
+            android:value="667" />
         <!--头条屏幕适配-->
 
 

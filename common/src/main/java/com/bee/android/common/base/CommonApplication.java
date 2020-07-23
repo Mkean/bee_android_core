@@ -15,7 +15,9 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bee.android.common.BuildConfig;
+import com.bee.android.common.config.RouterConfigKt;
 import com.bee.android.common.event.AppBackEvent;
 import com.bee.android.common.event.AppFrontEvent;
 import com.bee.android.common.mmkv.MMKVUtils;
@@ -45,7 +47,7 @@ public class CommonApplication extends BaseApplication {
 
     public static final int APP_STATUS_KILLED = 0; // 表示应用非正常启动
     public static final int APP_STATUS_NORMAL = 1; // 表示应用正常启动的
-    public static final int APP_STATUS = APP_STATUS_NORMAL; // 记录APP启动状态
+    public static  int APP_STATUS = APP_STATUS_NORMAL; // 记录APP启动状态
 
     public NetworkStatusReceiver mNetworkStatusReceiver; // 用于监听网络改变
 
@@ -110,6 +112,13 @@ public class CommonApplication extends BaseApplication {
      * TODO：重新初始化应用，启动欢迎页
      */
     public static void reInitApp() {
+        ARouter.getInstance()
+                .build(RouterConfigKt.LAUNCH_LAUNCHER)
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .navigation();
+        CommonLogger.i(TAG, "重新初始化应用，启动欢迎页");
+
     }
 
     private void initSmartRefresh() {

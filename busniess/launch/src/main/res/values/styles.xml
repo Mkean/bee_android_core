@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--启动页主题-->
+    <style name="App.Theme.Launch" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <!--无ActionBar-->
+        <item name="windowActionBar">false</item>
+        <!--无标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--全屏-->
+        <item name="android:windowFullscreen">true</item>
+        <!--导航栏颜色-->
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent
+        </item>
+        <!--是否有遮盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--背景-->
+        <item name="android:windowBackground">@drawable/launch_splash</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:ignore="NewApi">true</item>
+
+    </style>
+</resources>

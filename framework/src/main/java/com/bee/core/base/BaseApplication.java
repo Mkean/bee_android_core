@@ -31,6 +31,7 @@ public class BaseApplication extends Application {
         Log.e("BaseApplication","------应用包名-----" + packageName);
         String sign = AppUtils.getSign(this, packageName);
         Log.e("BaseApplication","------应用签名，和新浪签名工具生成的值一样的------" + sign);
+        Log.e("BaseApplication", "-----");
 
         initCommonLog();
 
@@ -39,21 +40,14 @@ public class BaseApplication extends Application {
         initX5(this);
     }
 
-    private void initARouter() {
-        if (BuildConfig.DEBUG) {
-            ARouter.openLog(); // 打开日志
-            ARouter.openDebug(); // 开启调试模式（如果在InstanceRun模式下运行，必须开启调试模式！线上版本需要关闭，否则有安全风险）
-        }
-        ARouter.init(this);
-    }
-
     private void initX5(Context context) {
         QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
 
             @Override
-            public void onViewInitFinished(boolean b) {
+            public void onViewInitFinished(boolean arg0) {
                 // TODO Auto-generated method stub
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                CommonLogger.d(TAG, " onViewInitFinished is " + arg0);
             }
 
             @Override
@@ -61,28 +55,35 @@ public class BaseApplication extends Application {
                 // TODO Auto-generated method stub
             }
         };
-
-        // 允许使用流量下载
+        //允许使用流量下载
         QbSdk.setDownloadWithoutWifi(true);
-        // x5内核初始化接口
+        //x5内核初始化接口
         QbSdk.initX5Environment(context, cb);
-        // 下载相关结果
+        //下载相关接口
         QbSdk.setTbsListener(new TbsListener() {
             @Override
             public void onDownloadFinish(int i) {
-
+                CommonLogger.d(TAG, " onDownloadFinish i = " + i);
             }
 
             @Override
             public void onInstallFinish(int i) {
-
+                CommonLogger.d(TAG, " onInstallFinish i = " + i);
             }
 
             @Override
             public void onDownloadProgress(int i) {
-
+                CommonLogger.d(TAG, " onDownloadProgress i = " + i);
             }
         });
+    }
+
+    private void initARouter() {
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog(); // 打开日志
+            ARouter.openDebug(); // 开启调试模式（如果在InstanceRun模式下运行，必须开启调试模式！线上版本需要关闭，否则有安全风险）
+        }
+        ARouter.init(this); // 尽可能早，推荐在Application中初始化
     }
 
     /**
@@ -95,11 +96,10 @@ public class BaseApplication extends Application {
                 .setDay(7)
                 .setCachePath(getApplicationContext().getFilesDir().getAbsolutePath())
                 .setPath(logPath)
-                .setEncryptKey16("2020143252010714".getBytes())
-                .setEncryptIV16("2020143252010714".getBytes())
+                .setEncryptKey16("2020161052010514".getBytes())
+                .setEncryptIV16("2020161052010514".getBytes())
                 .enableAppCrash(true)
                 .enableDebug(true);
-
         CommonLogger.init(config);
     }
 }
