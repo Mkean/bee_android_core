@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit
  * TODO:有误
  */
 @Route(path = LAUNCH_LAUNCHER)
-class LauncherActivity : AppCompatActivity(), CancelAdapt {
+class LauncherActivity : Activity(), CancelAdapt {
 
     companion object {
         const val TAG = "LauncherActivity"

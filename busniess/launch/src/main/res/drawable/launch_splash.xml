@@ -10,14 +10,18 @@
 
     <item android:gravity="center">
 
-        <bitmap android:src="@drawable/launch_launcher_mid" />
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/launch_launcher_mid" />
     </item>
 
     <item
         android:gravity="center_horizontal|top"
         android:top="73dp">
 
-        <bitmap android:src="@drawable/launch_launcher_top" />
+        <bitmap
+            android:gravity="center|top"
+            android:src="@drawable/launch_launcher_top" />
 
     </item>
 
@@ -25,7 +29,9 @@
         android:bottom="30dp"
         android:gravity="center_horizontal|bottom">
 
-        <bitmap android:src="@drawable/launch_launcher_bottom" />
+        <bitmap
+            android:gravity="center|bottom"
+            android:src="@drawable/launch_launcher_bottom" />
 
     </item>
 </layer-list>

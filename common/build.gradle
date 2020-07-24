@@ -68,6 +68,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
     compileOnly rootProject.ext.dependencies["appcompat"]
     compileOnly rootProject.ext.dependencies["constraint-layout"]
 
@@ -91,7 +92,6 @@ dependencies {
     compileOnly rootProject.ext.dependencies["retrofit"]
     compileOnly rootProject.ext.dependencies["retrofit-converter-gson"]
     compileOnly rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
-    compileOnly rootProject.ext.dependencies["okhttp"]
     compileOnly rootProject.ext.dependencies["okhttp-logging-interceptor"]
     compileOnly(rootProject.ext.dependencies["rxlife"])
 

@@ -75,7 +75,6 @@ dependencies {
     compileOnly rootProject.ext.dependencies["retrofit"]
     compileOnly rootProject.ext.dependencies["retrofit-converter-gson"]
     compileOnly rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
-    compileOnly rootProject.ext.dependencies["okhttp"]
     compileOnly rootProject.ext.dependencies["okhttp-logging-interceptor"]
     compileOnly(rootProject.ext.dependencies["rxlife"])
 
