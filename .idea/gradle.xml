@@ -12,7 +12,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/busniess/course" />
+            <option value="$PROJECT_DIR$/busniess/expand" />
+            <option value="$PROJECT_DIR$/busniess/home" />
             <option value="$PROJECT_DIR$/busniess/launch" />
+            <option value="$PROJECT_DIR$/busniess/mall" />
+            <option value="$PROJECT_DIR$/busniess/my" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/framework" />
             <option value="$PROJECT_DIR$/update" />

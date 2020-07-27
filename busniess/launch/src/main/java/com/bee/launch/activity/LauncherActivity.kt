@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.facade.callback.NavCallback
@@ -18,13 +17,11 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.jessyan.autosize.internal.CancelAdapt
-import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
 /**
- *@Description:
+ *@Description: 程序启动页
  *
- * TODO:有误
  */
 @Route(path = LAUNCH_LAUNCHER)
 class LauncherActivity : Activity(), CancelAdapt {
@@ -81,8 +78,29 @@ class LauncherActivity : Activity(), CancelAdapt {
                 }
     }
 
+    override fun onStart() {
+        super.onStart()
+        CommonLogger.i(SKIP_TAG, "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CommonLogger.i(SKIP_TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        CommonLogger.i(SKIP_TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        CommonLogger.i(SKIP_TAG, "onStop")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        CommonLogger.i(SKIP_TAG, "onDestroy")
         /*if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
         }*/

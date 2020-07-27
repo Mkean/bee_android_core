@@ -91,6 +91,8 @@ dependencies {
 
     implementation rootProject.ext.dependencies["AndroidAutoSize"]
 
+    implementation rootProject.ext.dependencies["design"]
+
     implementation rootProject.ext.dependencies["lottie"]
     implementation rootProject.ext.dependencies["gson"]
     implementation rootProject.ext.dependencies["logan"]
@@ -100,8 +102,12 @@ dependencies {
 
     compileOnly rootProject.ext.dependencies["wechat-sdk-android-without-mta"]
 
-    implementation project(':common')
-    implementation project(':update')
+
+    implementation project(':home')
+    implementation project(':course')
     implementation project(':launch')
+    implementation project(':expand')
+    implementation project(':mall')
+    implementation project(':my')
 
 }

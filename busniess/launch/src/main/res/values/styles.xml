@@ -16,8 +16,10 @@
         <item name="android:windowContentOverlay">@null</item>
         <!--背景-->
         <item name="android:windowBackground">@drawable/launch_splash</item>
-
+        <!--使导航栏和状态栏可绘制（5.0以上支持），即状态栏是否覆盖在contentView上-->
         <item name="android:windowDrawsSystemBarBackgrounds" tools:ignore="NewApi">true</item>
+        <!--凹凸屏适配-->
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">shortEdges</item>
 
     </style>
 </resources>

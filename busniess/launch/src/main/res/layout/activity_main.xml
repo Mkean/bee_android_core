@@ -4,17 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    android:background="@color/common_color_ffffff">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello Bee"
-        android:textColor="@color/common_color_333333"
-        android:textSize="16sp"
+    <com.bee.android.common.view.TabViewPager
+        android:id="@+id/bee_home_tab_vp"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
+        android:layout_marginBottom="@dimen/size_77dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/bee_home_tab_layout"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_82dp"
+        android:background="@drawable/launch_main_tab_bg"
+        android:paddingTop="@dimen/size_6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:tabBackground="@color/launch_color_transparent"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/launch_color_transparent"
+        app:tabIndicatorHeight="@dimen/size_0dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/launch_color_transparent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

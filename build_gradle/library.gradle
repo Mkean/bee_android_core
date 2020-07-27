@@ -1,0 +1,104 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.compileSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        vectorDrawables.useSupportLibrary = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+//            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'armeabi'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation project(':common')
+    implementation project(':update')
+
+    compileOnly rootProject.ext.dependencies["appcompat"]
+    compileOnly rootProject.ext.dependencies["constraint-layout"]
+
+    kapt rootProject.ext.dependencies["arouter-compiler"]
+    kapt rootProject.ext.dependencies["butterknife-compiler"]
+
+    compileOnly rootProject.ext.dependencies["arouter-api"]
+    compileOnly rootProject.ext.dependencies["arouter-annotation"]
+
+    compileOnly rootProject.ext.dependencies["butterknife"]
+    compileOnly rootProject.ext.dependencies["eventBus"]
+
+    compileOnly rootProject.ext.dependencies["rxjava"]
+    compileOnly rootProject.ext.dependencies["rxandroid"]
+    compileOnly rootProject.ext.dependencies["rxpermissions"]
+    compileOnly rootProject.ext.dependencies["retrofit"]
+    compileOnly rootProject.ext.dependencies["retrofit-converter-gson"]
+    compileOnly rootProject.ext.dependencies["retrofit-adapter-rxjava2"]
+    compileOnly rootProject.ext.dependencies["okhttp-logging-interceptor"]
+    compileOnly(rootProject.ext.dependencies["rxlife"])
+
+    compileOnly rootProject.ext.dependencies["gson"]
+    compileOnly rootProject.ext.dependencies["lottie"]
+
+
+    compileOnly rootProject.ext.dependencies["wechat-sdk-android-without-mta"]
+    compileOnly rootProject.ext.dependencies["webview-x5"]
+
+    compileOnly rootProject.ext.dependencies["recyclerview"]
+    compileOnly rootProject.ext.dependencies["SmartRefreshLayout"]
+    compileOnly rootProject.ext.dependencies["adapterHelper"]
+
+    compileOnly rootProject.ext.dependencies["AndroidAutoSize"]
+}

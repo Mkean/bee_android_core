@@ -1,4 +1,9 @@
-include ':app', ':common', ':launch', ':update', ':framework'
+include ':app', ':common', ':launch', ':update', ':framework', ':home', ':course', ':expand', ':mall', ':my'
 rootProject.name = "bee_android_core"
 
 project(':launch').projectDir = new File('busniess/launch')
+project(':home').projectDir = new File('busniess/home')
+project(':course').projectDir = new File('busniess/course')
+project(':expand').projectDir = new File('busniess/expand')
+project(':mall').projectDir = new File('busniess/mall')
+project(':my').projectDir = new File('busniess/my')
