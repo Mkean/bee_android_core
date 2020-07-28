@@ -92,6 +92,7 @@ dependencies {
     compileOnly rootProject.ext.dependencies["gson"]
     compileOnly rootProject.ext.dependencies["lottie"]
 
+    compileOnly rootProject.ext.dependencies["design"]
 
     compileOnly rootProject.ext.dependencies["wechat-sdk-android-without-mta"]
     compileOnly rootProject.ext.dependencies["webview-x5"]

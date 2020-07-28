@@ -117,6 +117,8 @@ dependencies {
 
     compileOnly(rootProject.ext.dependencies["zxing"])
 
+    compileOnly rootProject.ext.dependencies["multidex"]
+
     //时间选择器
     api rootProject.ext.dependencies["pickerView"]
 

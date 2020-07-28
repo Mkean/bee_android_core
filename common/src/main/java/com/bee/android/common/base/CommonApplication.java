@@ -14,6 +14,7 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.multidex.MultiDex;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bee.android.common.BuildConfig;
@@ -63,6 +64,8 @@ public class CommonApplication extends BaseApplication {
         super.onCreate();
         initNetWork();
         initSmartRefresh();
+
+        MultiDex.install(this);
 
         initPersistence();
 

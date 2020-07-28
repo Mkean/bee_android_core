@@ -1,11 +1,1 @@
 apply from: "$project.rootDir/build_gradle/library.gradle"
-
-dependencies{
-    implementation project(':home')
-    implementation project(':course')
-    implementation project(':expand')
-    implementation project(':mall')
-    implementation project(':my')
-
-    compileOnly rootProject.ext.dependencies["design"]
-}
