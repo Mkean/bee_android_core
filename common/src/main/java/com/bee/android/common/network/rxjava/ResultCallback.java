@@ -11,7 +11,7 @@ public abstract class ResultCallback<T> extends Callback<T> {
     @Override
     public void onError(Throwable e) {
         onFailure(e);
-        onFailed(handleException(e));
+        onCommonFailure(handleException(e));
     }
 
     @Override
@@ -36,7 +36,7 @@ public abstract class ResultCallback<T> extends Callback<T> {
         return et;
     }
 
-    public void onFailed(ErrorException e) {
+    public void onCommonFailure(ErrorException e) {
 
     }
 

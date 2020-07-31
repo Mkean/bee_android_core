@@ -125,6 +125,8 @@ public class TimeUtil {
 
     /**
      * 判断两个时间的天数 相差是否大于等于一天（过了0点也算大）（time2 比 time 大一天）
+     *
+     * @return {@code true} 大于等于1天， {@code false} 小于1天
      */
     public static boolean isLargeOneDay(long time1, long time2) {
         Calendar calendar = Calendar.getInstance();

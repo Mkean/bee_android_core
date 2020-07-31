@@ -16,13 +16,16 @@ class ComponentRegistry {
         private val mComponents: HashMap<String, ArrayList<IComponentDescription>> = HashMap()
 
         fun loadComponents() {
+
+            mComponents.clear()
+
             ServiceLoaderUtil.loadAllServices(IComponentDescription::class.java).also { it ->
                 it.forEach {
                     if (it != null) {
-                        val group = if (TextUtils.isEmpty(it.getGroup())) {
+                        val group = if (TextUtils.isEmpty(it.group)) {
                             UN_KNOWN
                         } else {
-                            it.getGroup()
+                            it.group
                         }
 
                         if (mComponents[group] == null) {

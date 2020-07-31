@@ -5,7 +5,7 @@ package com.bee.core.logger;
  */
 public class CommonLoggerExceptionHandler implements Thread.UncaughtExceptionHandler {
 
-    private static final String TAG = "MonkeyExceptionHandler";
+    private static final String TAG = "CommonExceptionHandler";
 
     private Thread.UncaughtExceptionHandler mDefaultExceptionHandler;
 

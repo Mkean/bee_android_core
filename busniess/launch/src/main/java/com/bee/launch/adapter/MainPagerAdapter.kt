@@ -7,19 +7,9 @@ import androidx.fragment.app.FragmentPagerAdapter
 /**
  *@Description:
  */
-class MainPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class MainPagerAdapter(fm: FragmentManager, private var fragments: List<Fragment>) : FragmentPagerAdapter(fm) {
 
-    companion object {
-        const val MAX_COUNT = 5
-    }
+    override fun getItem(position: Int): Fragment =fragments[position]
 
-
-    override fun getItem(position: Int): Fragment? {
-        var fragment: Fragment? = null
-
-
-        return fragment
-    }
-
-    override fun getCount(): Int = MAX_COUNT
+    override fun getCount(): Int = fragments.size
 }

@@ -1,6 +1,6 @@
 package com.bee.android.common.network.rxjava;
 
-public class ErrorException {
+public class ErrorException extends Exception {
     private String code;
     private String message;
 

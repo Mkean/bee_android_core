@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class CommonLogger {
 
-    private static final String TAG = "MonkeyLogger";
+    private static final String TAG = "CommonLogger";
 
     /**
      * 日志级别，配置0全部显示，配置大于8全不显示
@@ -443,7 +443,7 @@ public class CommonLogger {
 
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement e;
-        if (stacktrace[3].getClassName().indexOf("MonkeyLogger") != -1) {
+        if (stacktrace[3].getClassName().contains("CommonLogger")) {
             e = stacktrace[4];
         } else {
             e = stacktrace[3];

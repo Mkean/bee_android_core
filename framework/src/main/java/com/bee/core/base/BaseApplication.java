@@ -6,8 +6,10 @@ import android.util.Log;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bee.core.BuildConfig;
+import com.bee.core.delegate.IComponentDescription;
 import com.bee.core.logger.CommonLogConfig;
 import com.bee.core.logger.CommonLogger;
+import com.bee.core.spi.ComponentRegistry;
 import com.bee.core.utils.AppUtils;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
@@ -28,16 +30,20 @@ public class BaseApplication extends Application {
         app = this;
         String packageName = AppUtils.getPackageName(this);
         Log.e("BaseApplication", "-----");
-        Log.e("BaseApplication","------应用包名-----" + packageName);
+        Log.e("BaseApplication", "------应用包名-----" + packageName);
         String sign = AppUtils.getSign(this, packageName);
-        Log.e("BaseApplication","------应用签名，和新浪签名工具生成的值一样的------" + sign);
+        Log.e("BaseApplication", "------应用签名，和新浪签名工具生成的值一样的------" + sign);
         Log.e("BaseApplication", "-----");
 
         initCommonLog();
 
         initARouter();
 
+        initComponent();
+
         initX5(this);
+
+        dispatchApplication();
     }
 
     private void initX5(Context context) {
@@ -78,12 +84,35 @@ public class BaseApplication extends Application {
         });
     }
 
+    /**
+     * 初始化路由
+     */
     private void initARouter() {
         if (BuildConfig.DEBUG) {
             ARouter.openLog(); // 打开日志
             ARouter.openDebug(); // 开启调试模式（如果在InstanceRun模式下运行，必须开启调试模式！线上版本需要关闭，否则有安全风险）
         }
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
+    }
+
+    /**
+     * 收集组建
+     */
+    private void initComponent() {
+        ComponentRegistry.Companion.loadComponents();
+    }
+
+    /**
+     * 组件分发Application生命周期
+     */
+    private void dispatchApplication() {
+        for (IComponentDescription iComponentDescription : ComponentRegistry.Companion.getAllComponents()) {
+
+            if (iComponentDescription.getApplicationDelegate() != null) {
+
+                iComponentDescription.getApplicationDelegate().onCreate(this);
+            }
+        }
     }
 
     /**
