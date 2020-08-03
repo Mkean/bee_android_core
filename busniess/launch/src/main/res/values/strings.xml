@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">蜜蜂</string>
+
+    <string name="launch_course_privacy_clause_dec">感谢您使用本产品，为更好地保障您的个人隐私安全，我们对隐私政策进行了更新，其中具体阐述将如何收集以及如何使用您的个人信息，请先认证阅读《用户协议》以及《隐私政策》。如有任何疑问，可以咨询微信公众号「蜜蜂bee」，如您同意以上政策内容，可以点击「同意并继续」，开始今天的额学习。</string>
+    <string name="launch_course_privacy_clause_tips">蜜蜂🐝隐私政策</string>
+    <string name="launch_privacy_register_update_dec">我已阅读《用户隐私政策》和《用户注册协议》</string>
+    <string name="launch_privacy_update_dec">我已阅读《用户隐私政策》</string>
+    <string name="launch_register_update_dec">我已阅读《用户注册协议》</string>
+    <string name="launch_privacy_update_tip">《用户隐私政策》已更新，您是否同意更新后的协议？</string>
+    <string name="launch_register_update_tip">《用户注册协议》已更新，您是否同意更新后的协议？</string>
+    <string name="launch_privacy_register_update_tip">《用户隐私政策》和《用户注册协议》已更新，您是否同意更新后的协议？</string>
+    <string name="launch_course_disagree">退出应用</string>
+    <string name="launch_course_agree">同意并继续</string>
+    <string name="launch_cancel">取消</string>
+
+    <string name="launch_agree">同意</string>
+    <string name="launch_disagree">拒绝</string>
+
+    <string name="launch_please_sure_select">您还未勾选我已阅读哦！</string>
 </resources>

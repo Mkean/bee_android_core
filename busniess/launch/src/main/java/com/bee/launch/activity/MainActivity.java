@@ -3,7 +3,12 @@ package com.bee.launch.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -20,10 +25,12 @@ import com.bee.android.common.bean.UpdateBean;
 import com.bee.android.common.component.ComponentTagKt;
 import com.bee.android.common.config.CommonGlobalConfigKt;
 import com.bee.android.common.config.ParamConfigKt;
+import com.bee.android.common.dialog.TitleContentWrapUpDownButtonDialog;
 import com.bee.android.common.dialog.UpdateApkDialog;
 import com.bee.android.common.mmkv.MMKVUtils;
 import com.bee.android.common.permission.PermissionUtils;
 import com.bee.android.common.view.TabViewPager;
+import com.bee.android.common.web.config.H5WebConfig;
 import com.bee.core.delegate.IComponentDescription;
 import com.bee.core.logger.CommonLogger;
 import com.bee.core.permission.config.PermissionStr;
@@ -314,7 +321,53 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     private void showPrivacyClauseDialog(long userDataAgreementTime, long userRegisterAgreementTime) {
+        CommonLogger.i(TAG, "显示协议弹窗");
+        String dec = getResources().getString(R.string.launch_course_privacy_clause_dec);
+        SpannableString spannableString = new SpannableString(dec);
+        int agreementStartIndex = dec.indexOf("《用户协议》");
+        int agreementEndIndex = agreementStartIndex + 6;
+        MyClickableSpan agreementSpan = new MyClickableSpan();
+        agreementSpan.setTag(1);
+        int privacyStartIndex = dec.indexOf("《隐私政策》");
+        int privacyEndIndex = privacyStartIndex + 6;
+        MyClickableSpan privacySpan = new MyClickableSpan();
+        privacySpan.setTag(2);
 
+        spannableString.setSpan(agreementSpan, agreementStartIndex, agreementEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.common_color_ff8a66)),
+                agreementStartIndex, agreementEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(privacySpan, privacyStartIndex, privacyEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.common_color_ff8a66)),
+                privacyStartIndex, privacyEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TitleContentWrapUpDownButtonDialog buttonDialog = new TitleContentWrapUpDownButtonDialog(this,
+                getResources().getString(R.string.launch_course_privacy_clause_tips),
+                spannableString,
+                getResources().getString(R.string.launch_course_agree),
+                getResources().getString(R.string.launch_course_disagree),
+                new TitleContentWrapUpDownButtonDialog.ActionListener() {
+                    @Override
+                    public void clickUp() {
+                        MMKVUtils.putBoolean(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.IS_ALSO_SHOW_PRIVACY_AGREEMENT, true);
+                        if (userDataAgreementTime > 0 && userRegisterAgreementTime > 0) {
+                            MMKVUtils.putLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_PRIVACY_AGREEMENT_TIMESTAMP, userDataAgreementTime);
+                            MMKVUtils.putLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_REGISTER_AGREEMENT_TIMESTAMP, userRegisterAgreementTime);
+                        } else {
+                            long currentTimeMillis = System.currentTimeMillis();
+                            MMKVUtils.putLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_PRIVACY_AGREEMENT_TIMESTAMP, currentTimeMillis);
+                            MMKVUtils.putLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_REGISTER_AGREEMENT_TIMESTAMP, currentTimeMillis);
+                        }
+                        dialogFinish(HomeDialogType.DialogTypePrivacyAgreement);
+                    }
+
+                    @Override
+                    public void clickDown() {
+                        finish();
+                    }
+                });
+
+        buttonDialog.show();
     }
 
     private void showAddressDialog() {
@@ -346,6 +399,72 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         }
         // 1.更新隐私协议 2.更新注册协议 3.都更新
         int type = 0;
+        if (userDataAgreementTime > MMKVUtils.getLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_PRIVACY_AGREEMENT_TIMESTAMP, 0) ||
+                userRegisterAgreementTime > MMKVUtils.getLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_REGISTER_AGREEMENT_TIMESTAMP, 0)) {
+            CommonLogger.i(TAG, "显示协议更新弹窗");
+            String title = "";
+            String dec;
+            SpannableString spannableString = null;
+            if (userDataAgreementTime > MMKVUtils.getLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_PRIVACY_AGREEMENT_TIMESTAMP, 0) &&
+                    userRegisterAgreementTime > MMKVUtils.getLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_REGISTER_AGREEMENT_TIMESTAMP, 0)) {
+                type = 3;
+
+                dec = getResources().getString(R.string.launch_privacy_register_update_dec);
+                title = getResources().getString(R.string.launch_privacy_register_update_tip);
+                spannableString = new SpannableString(dec);
+
+                int agreementStartIndex = dec.indexOf("《用户注册协议》");
+                int agreementEndIndex = agreementStartIndex + 8;
+                MyClickableSpan agreementSpan = new MyClickableSpan();
+                agreementSpan.setTag(1);
+
+                int privacyStartIndex = dec.indexOf("《用于隐私政策》");
+                int privacyEndIndex = privacyStartIndex + 8;
+                MyClickableSpan privacySpan = new MyClickableSpan();
+                privacySpan.setTag(2);
+
+                spannableString.setSpan(agreementSpan, agreementStartIndex, agreementEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.common_color_ff8a66)),
+                        agreementStartIndex, agreementEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                spannableString.setSpan(privacySpan, privacyStartIndex, privacyEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.common_color_ff8a66)),
+                        privacyStartIndex, privacyEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            } else if (userDataAgreementTime > MMKVUtils.getLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_PRIVACY_AGREEMENT_TIMESTAMP, 0)) {
+                type = 1;
+
+                dec = getString(R.string.launch_privacy_update_dec);
+                title = getString(R.string.launch_privacy_update_tip);
+                spannableString = new SpannableString(dec);
+
+                int privacyStartIndex = dec.indexOf("《用户隐私政策》");
+                int privacyEndIndex = privacyStartIndex + 8;
+                MyClickableSpan privacySpan = new MyClickableSpan();
+                privacySpan.setTag(2);
+                spannableString.setSpan(privacySpan, privacyStartIndex, privacyEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.common_color_ff8a66)),
+                        privacyStartIndex, privacyEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else if (userRegisterAgreementTime > MMKVUtils.getLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_REGISTER_AGREEMENT_TIMESTAMP, 0)) {
+                type = 2;
+
+                dec = getString(R.string.launch_register_update_dec);
+                title = getString(R.string.launch_register_update_tip);
+                spannableString = new SpannableString(dec);
+
+                int agreementStartIndex = dec.indexOf("《用户注册协议》");
+                int agreementEndIndex = agreementStartIndex + 8;
+                MyClickableSpan agreementSpan = new MyClickableSpan();
+                agreementSpan.setTag(1);
+
+                spannableString.setSpan(agreementSpan, agreementStartIndex, agreementEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.common_color_ff8a66)),
+                        agreementStartIndex, agreementEndIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            }
+
+            int finalType = type;
+        }
     }
 
     @Override
@@ -356,6 +475,38 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void showFail() {
 
+    }
+
+    private class MyClickableSpan extends ClickableSpan {
+        private int tag;
+
+        public void setTag(int tag) {
+            this.tag = tag;
+        }
+
+        @Override
+        public void onClick(@NonNull View widget) {
+            CommonLogger.i(TAG, "tag={}", tag);
+            if (tag == 1) {
+                ARouter.getInstance().build(H5WebConfig.H5_ROUTER_WEB_ACTIVITY)
+                        .withString(H5WebConfig.H5_PARAM_URL, H5WebConfig.H5_URL_REGISTER)
+                        .withString(H5WebConfig.H5_PARAM_FLAG, H5WebConfig.H5_FLAG_REGISTER)
+                        .navigation();
+            } else if (tag == 2) {
+                ARouter.getInstance().build(H5WebConfig.H5_ROUTER_WEB_ACTIVITY)
+                        .withString(H5WebConfig.H5_PARAM_URL, H5WebConfig.H5_URL_PRIVATE)
+                        .withString(H5WebConfig.H5_PARAM_FLAG, H5WebConfig.H5_FLAG_PRIVATE)
+                        .navigation();
+            }
+        }
+
+        @Override
+        public void updateDrawState(@NonNull TextPaint ds) {
+            super.updateDrawState(ds);
+            ds.setColor(getResources().getColor(R.color.launch_color_45a6ff));
+            ds.setUnderlineText(false); // 不要下划线
+            ds.clearShadowLayer();
+        }
     }
 
     /**
