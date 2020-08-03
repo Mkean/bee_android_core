@@ -6,14 +6,14 @@ import com.bee.android.common.base.BasePresenter;
 /**
  * @Description:
  */
-public class WebBaseActivity<T extends BasePresenter> extends BaseActivity {
+public class WebBaseActivity<T extends BasePresenter> extends BaseActivity<T> {
     @Override
     protected int getLayoutId() {
         return 0;
     }
 
     @Override
-    protected BasePresenter getPresenter() {
+    protected T getPresenter() {
         return null;
     }
 }
