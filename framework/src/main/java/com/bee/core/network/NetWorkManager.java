@@ -5,11 +5,25 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.bee.core.network.config.okhttp.OkConfig;
+import com.bee.core.network.config.ssl.SSLState;
+import com.bee.core.network.config.ssl.TrustAllCerts;
+import com.bee.core.network.config.ssl.TrustDoubleCerts;
+import com.bee.core.network.config.ssl.TrustHostnameVerifier;
+import com.bee.core.network.config.ssl.TrustSingleCerts;
 import com.dianping.logan.BuildConfig;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
+import java.io.IOException;
+import java.security.Key;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
 
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -120,6 +134,48 @@ public class NetWorkManager {
             });
             logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             okBuilder.addInterceptor(logInterceptor);
+        }
+
+        if (okConfig.getSSLState() != null) {
+            // 支持信任所有证书https
+            if (okConfig.getSSLState() == SSLState.ALL) {
+                okBuilder.sslSocketFactory(TrustAllCerts.createSSLSocketFactory(), new TrustAllCerts());
+            }
+
+            // 支持https信任指定服务器的证书---单向认证
+            if (okConfig.getSSLState() == SSLState.SINGLE) {
+                if (TextUtils.isEmpty(okConfig.getServerCer())) {
+                    throw new IllegalArgumentException("ServerCer path not be null");
+                }
+                try {
+                    SSLContext sslContext = new TrustSingleCerts().setCertificates(context.getAssets().open(okConfig.getServerCer()));
+                    okBuilder.sslSocketFactory(sslContext.getSocketFactory(), new TrustSingleCerts());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // 支持https信任指定服务器的证书，服务器同时验证客户端证书----双向认证
+            if (okConfig.getSSLState() == SSLState.DOUBLE) {
+                if (TextUtils.isEmpty(okConfig.getClientCer())) {
+                    throw new IllegalArgumentException("ClientCer path not be null");
+                }
+                if (TextUtils.isEmpty(okConfig.getServerCer())) {
+                    throw new IllegalArgumentException("ServerCer path bot be null");
+                }
+
+                try {
+                    KeyStore clientKeyStore = KeyStore.getInstance("BKS");
+                    clientKeyStore.load(context.getAssets().open(okConfig.getClientCer()), okConfig.getClientPassword().toCharArray());
+                    KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+                    keyManagerFactory.init(clientKeyStore, okConfig.getClientPassword().toCharArray());
+                    SSLContext sslContext = new TrustDoubleCerts().setCertificates(keyManagerFactory, context.getAssets().open(okConfig.getServerCer()));
+                    okBuilder.sslSocketFactory(sslContext.getSocketFactory(), new TrustDoubleCerts());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            okBuilder.hostnameVerifier(new TrustHostnameVerifier());
         }
 
         if (okConfig.getCookiesManager(context) != null) {

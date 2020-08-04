@@ -573,8 +573,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private UpdateBean mUpdateBean;
 
     @Override
-    public void showSuccess(@NotNull UpdateBean bean) {
-        if (bean != null) {
+    public void showSuccess(UpdateBean bean) {
+        if (bean == null) {
             handHomeReadyForSkip();
             dialogFinish(HomeDialogType.DialogTypeUpdate);
             return;
@@ -639,7 +639,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void apkInstallEvent(ApkInstallEvent event) {
         CommonLogger.d(TAG, "apk安装event接受");
-        // TODO：明天继续
+        if (mUpdateBuilder != null && mUpdateBuilder.getInstallNotifier() != null) {
+            CommonLogger.d(TAG, "notification安装完成通知栏取消");
+            if (((NotificationInstallCreator) mUpdateBuilder.getInstallNotifier()) != null && ((NotificationInstallCreator) mUpdateBuilder.getInstallNotifier()).manager != null) {
+                ((NotificationInstallCreator) mUpdateBuilder.getInstallNotifier()).manager.cancelAll();
+            }
+            if (mUpdateBean != null && mUpdateApkDialog != null && mUpdateApkDialog.isShowing()) {
+                mUpdateApkDialog.getLlNow().setEnabled(true);
+                mUpdateApkDialog.getTvUpdateDownloadError().setText("免流量更新");
+                mUpdateApkDialog.getTvStatusNet().setVisibility(View.VISIBLE);
+                mUpdateApkDialog.getTvStatusNet().setText("已为您准备好最新版本的蜜蜂");
+            }
+        }
     }
 
     private class MyClickableSpan extends ClickableSpan {

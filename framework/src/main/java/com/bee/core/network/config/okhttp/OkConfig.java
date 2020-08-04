@@ -7,6 +7,8 @@ import com.bee.core.network.config.cookies.CookiesManager;
 import com.bee.core.network.config.cookies.ICookies;
 import com.bee.core.network.config.okhttp.interceptor.IInterceptorConfig;
 import com.bee.core.network.config.okhttp.interceptor.InterceptorArray;
+import com.bee.core.network.config.ssl.ISSLConfig;
+import com.bee.core.network.config.ssl.SSLState;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +16,7 @@ import java.util.List;
 
 import okhttp3.Interceptor;
 
-public class OkConfig implements IOkConfig, IInterceptorConfig, ICookies {
+public class OkConfig implements IOkConfig, IInterceptorConfig, ICookies, ISSLConfig {
 
     private static volatile OkConfig okConfig;
 
@@ -140,7 +142,30 @@ public class OkConfig implements IOkConfig, IInterceptorConfig, ICookies {
     }
 
     @Override
-    public CookiesManager getCookiesManager( Context context) {
+    public CookiesManager getCookiesManager(Context context) {
         return new CookiesManager(context);
+    }
+
+    @NotNull
+    @Override
+    public SSLState getSSLState() {
+        return SSLState.ALL;
+    }
+
+    @NotNull
+    @Override
+    public String getClientCer() {
+        return null;
+    }
+
+    @Override
+    public String getClientPassword() {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public String getServerCer() {
+        return null;
     }
 }

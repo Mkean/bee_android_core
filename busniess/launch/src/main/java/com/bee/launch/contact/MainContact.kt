@@ -21,7 +21,7 @@ interface MainContact {
 
     interface View : IView {
 
-        fun showSuccess(bean: UpdateBean)
+        fun showSuccess(bean: UpdateBean?)
 
         fun showFail()
 

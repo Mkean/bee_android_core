@@ -2,6 +2,7 @@ package com.bee.core.download
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.bee.core.network.config.ssl.TrustAllCerts
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -88,9 +89,10 @@ class DownloadTask {
             this.mFile = file
 
             val request = Request.Builder()
-                    .url(url)
-                    .build()
+                .url(url)
+                .build()
             val builder = OkHttpClient.Builder()
+            builder.sslSocketFactory(TrustAllCerts.createSSLSocketFactory(), TrustAllCerts())
             builder.connectTimeout(60, TimeUnit.SECONDS)
             builder.readTimeout(60, TimeUnit.SECONDS)
             builder.writeTimeout(60, TimeUnit.SECONDS)
@@ -98,91 +100,91 @@ class DownloadTask {
             val client = builder.build()
             // 异步请求
             client.newCall(request)
-                    .enqueue(object : Callback {
-                        override fun onFailure(call: Call, e: IOException) {
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        fileLoadingBean = FileLoadingBean()
+                        fileLoadingBean.type = FileLoadingBean.ERROR_TYPE
+                        fileLoadingBean.url = downLoadUrl
+                        fileLoadingBean.msg = Log.getStackTraceString(e)
+                        emitter!!.onNext(fileLoadingBean)
+
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        var ips: InputStream? = null
+                        var fos: FileOutputStream? = null
+                        val buf: ByteArray = ByteArray(1024)
+                        var len: Int
+                        try {
+                            // 储存下载文件的目录
+                            if (mFile.exists()) {
+                                mFile.delete()
+                            }
+
+                            val parentFile: File? = mFile.parentFile
+                            if (parentFile != null && !parentFile.exists()) {
+                                makeDir(parentFile)
+                            }
+                            mFile.createNewFile()
+
+                            ips = response.body()!!.byteStream()
+                            val total: Long = response.body()!!.contentLength()
+                            fos = FileOutputStream(mFile)
+                            var sum: Long = 0
+
+                            fileLoadingBean = FileLoadingBean()
+                            fileLoadingBean.type = FileLoadingBean.START_TYPE
+                            fileLoadingBean.total = total
+                            emitter!!.onNext(fileLoadingBean)
+
+                            listenTime = System.currentTimeMillis()
+
+                            while (ips.read(buf).also { len = it } != -1) {
+                                if (isCanceled)
+                                    break
+                                fos.write(buf, 0, len)
+                                sum += len
+
+                                var percent: Int = (100 * sum / total).toInt()
+                                var time: Long = System.currentTimeMillis()
+
+                                if (percent > progress && (percent == 1 || percent == 100 || time - listenTime > 100)) {
+                                    progress = percent
+                                    listenTime = time
+                                    fileLoadingBean = FileLoadingBean()
+                                    fileLoadingBean.type = FileLoadingBean.PROGRESS_TYPE
+                                    fileLoadingBean.progress = percent
+                                    emitter!!.onNext(fileLoadingBean)
+                                }
+                            }
+                            fos.flush()
+
+                            if (!isCanceled) {
+                                // 下载完成
+                                fileLoadingBean = FileLoadingBean()
+                                fileLoadingBean.type = FileLoadingBean.FINISH_TYPE
+                                fileLoadingBean.total = total
+                                fileLoadingBean.path = mFile.path
+                                emitter!!.onNext(fileLoadingBean)
+                            }
+
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                             fileLoadingBean = FileLoadingBean()
                             fileLoadingBean.type = FileLoadingBean.ERROR_TYPE
                             fileLoadingBean.url = downLoadUrl
                             fileLoadingBean.msg = Log.getStackTraceString(e)
                             emitter!!.onNext(fileLoadingBean)
-
-                        }
-
-                        override fun onResponse(call: Call, response: Response) {
-                            var ips: InputStream? = null
-                            var fos: FileOutputStream? = null
-                            val buf: ByteArray = ByteArray(1024)
-                            var len: Int
+                        } finally {
                             try {
-                                // 储存下载文件的目录
-                                if (mFile.exists()) {
-                                    mFile.delete()
-                                }
-
-                                val parentFile: File? = mFile.parentFile
-                                if (parentFile != null && !parentFile.exists()) {
-                                    makeDir(parentFile)
-                                }
-                                mFile.createNewFile()
-
-                                ips = response.body()!!.byteStream()
-                                val total: Long = response.body()!!.contentLength()
-                                fos = FileOutputStream(mFile)
-                                var sum: Long = 0
-
-                                fileLoadingBean = FileLoadingBean()
-                                fileLoadingBean.type = FileLoadingBean.START_TYPE
-                                fileLoadingBean.total = total
-                                emitter!!.onNext(fileLoadingBean)
-
-                                listenTime = System.currentTimeMillis()
-
-                                while (ips.read(buf).also { len = it } != -1) {
-                                    if (isCanceled)
-                                        break
-                                    fos.write(buf, 0, len)
-                                    sum += len
-
-                                    var percent: Int = (100 * sum / total).toInt()
-                                    var time: Long = System.currentTimeMillis()
-
-                                    if (percent > progress && (percent == 1 || percent == 100 || time - listenTime > 100)) {
-                                        progress = percent
-                                        listenTime = time
-                                        fileLoadingBean = FileLoadingBean()
-                                        fileLoadingBean.type = FileLoadingBean.PROGRESS_TYPE
-                                        fileLoadingBean.progress = percent
-                                        emitter!!.onNext(fileLoadingBean)
-                                    }
-                                }
-                                fos.flush()
-
-                                if (!isCanceled) {
-                                    // 下载完成
-                                    fileLoadingBean = FileLoadingBean()
-                                    fileLoadingBean.type = FileLoadingBean.FINISH_TYPE
-                                    fileLoadingBean.total = total
-                                    fileLoadingBean.path = mFile.path
-                                    emitter!!.onNext(fileLoadingBean)
-                                }
-
+                                ips?.close()
+                                fos?.close()
                             } catch (e: Exception) {
                                 e.printStackTrace()
-                                fileLoadingBean = FileLoadingBean()
-                                fileLoadingBean.type = FileLoadingBean.ERROR_TYPE
-                                fileLoadingBean.url = downLoadUrl
-                                fileLoadingBean.msg = Log.getStackTraceString(e)
-                                emitter!!.onNext(fileLoadingBean)
-                            } finally {
-                                try {
-                                    ips?.close()
-                                    fos?.close()
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
                             }
                         }
-                    })
+                    }
+                })
 
 
         } catch (e: Exception) {
