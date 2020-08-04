@@ -86,7 +86,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
      */
     protected abstract void initEventAndData();
 
-    private boolean registerEventBus() {
+    protected boolean registerEventBus() {
         return false;
     }
 
