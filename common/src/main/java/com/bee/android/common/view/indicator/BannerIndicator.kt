@@ -25,9 +25,9 @@ class BannerIndicator : LinearLayout {
     private var smallSet: AnimatorSet? = null
     private var largeSet: AnimatorSet? = null
 
-    private var dsahGap: Int = 0
-    private var slider_width: Int = 0
-    private var slider_height: Int = 0
+    private var dashGap: Int = 0
+    private var sliderWidth: Int = 0
+    private var sliderHeight: Int = 0
     private var sliderAlign: Int = 0
 
     private var mSelectColor: Int = 0
@@ -44,9 +44,9 @@ class BannerIndicator : LinearLayout {
         orientation = HORIZONTAL
         if (context != null) {
             val array = context.obtainStyledAttributes(attrs, R.styleable.CommonBannerIndicator, defStyleAttr, 0)
-            dsahGap = array.getDimension(R.styleable.CommonBannerIndicator_common_gap, ScreenUtil.dip2px(context, 2f).toFloat()).toInt()
-            slider_width = array.getDimension(R.styleable.CommonBannerIndicator_common_slider_width, ScreenUtil.dip2px(context, 5f).toFloat()).toInt()
-            slider_height = array.getDimension(R.styleable.CommonBannerIndicator_common_slider_height, ScreenUtil.dip2px(context, 2f).toFloat()).toInt()
+            dashGap = array.getDimension(R.styleable.CommonBannerIndicator_common_gap, ScreenUtil.dip2px(context, 2f).toFloat()).toInt()
+            sliderWidth = array.getDimension(R.styleable.CommonBannerIndicator_common_slider_width, ScreenUtil.dip2px(context, 5f).toFloat()).toInt()
+            sliderHeight = array.getDimension(R.styleable.CommonBannerIndicator_common_slider_height, ScreenUtil.dip2px(context, 2f).toFloat()).toInt()
             sliderAlign = array.getInt(R.styleable.CommonBannerIndicator_common_slider_align, 1)
 
             mSelectColor = array.getColor(R.styleable.CommonBannerIndicator_common_select_color, Color.parseColor("#ffc700"))
@@ -71,10 +71,10 @@ class BannerIndicator : LinearLayout {
         this.viewPager = viewPager
         for (i: Int in 0..viewPager.adapter!!.count - 2) {
             val imageView = BannerItemView(context, sliderAlign)
-            val layoutParams = LayoutParams(slider_width, slider_height)
+            val layoutParams = LayoutParams(sliderWidth, sliderHeight)
             // 设置小圆点之间的距离
             if (i > 0) {
-                layoutParams.setMargins(dsahGap, 0, 0, 0)
+                layoutParams.setMargins(dashGap, 0, 0, 0)
                 imageView.alpha = 1f
             } else {
                 layoutParams.setMargins(0, 0, 0, 0)
@@ -198,8 +198,8 @@ class BannerIndicator : LinearLayout {
     private fun getOffset(roundRectView: BannerItemView): Int {
         var offset = 0
         when (roundRectView.location) {
-            0 -> offset = (slider_width - slider_height) / 2
-            1, 2 -> offset = slider_width - slider_height
+            0 -> offset = (sliderWidth - sliderHeight) / 2
+            1, 2 -> offset = sliderWidth - sliderHeight
         }
         return offset
     }

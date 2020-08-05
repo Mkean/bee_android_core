@@ -1,0 +1,59 @@
+package com.bee.home.fragment.animation;
+
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
+
+/**
+ * @Description: 首页---轮播图item viewpager的进入进出动画
+ */
+public class ScaleInPagerTransformer implements ViewPager.PageTransformer {
+
+    private static final float DEFAULT_MIN_SCALE = 0.85f;
+    private float mMinScale = DEFAULT_MIN_SCALE;
+
+    public ScaleInPagerTransformer() {
+    }
+
+    public ScaleInPagerTransformer(float minScale) {
+        this.mMinScale = minScale;
+    }
+
+    @Override
+    public void transformPage(@NonNull View view, float position) {
+        int pageWidth = view.getWidth();
+        int pageHeight = view.getHeight();
+
+        view.setPivotY(pageHeight / 2);
+        view.setPivotX(pageWidth / 2);
+
+        if (position < -1) { // [-Infinity, -1)
+            // This page is way off-screen to the left
+            view.setScaleX(mMinScale);
+            view.setScaleY(mMinScale);
+            view.setPivotX(pageWidth);
+
+        } else if (position <= 1) { // [-1, 1]
+            // Modify the default slide transition to shrink the page as well
+            if (position < 0) { // 1-2:1[0, -1] ; 2-1:1[-1, 0]
+                float scaleFactor = (1 + position) * (1 - mMinScale) + mMinScale;
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+
+                view.setPivotX(pageWidth * (0.5f + (0.5f * -position)));
+            } else {
+                float scaleFactor = (1 - position) * (1 - mMinScale) + mMinScale;
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+
+                view.setPivotX(pageWidth * ((1 - position) * 0.5f));
+            }
+
+        } else { // {1, Infinity]
+            view.setPivotX(0);
+            view.setScaleX(mMinScale);
+            view.setScaleY(mMinScale);
+        }
+    }
+}

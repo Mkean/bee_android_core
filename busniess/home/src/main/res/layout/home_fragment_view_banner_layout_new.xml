@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bannerContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+
+    <com.bee.android.common.view.banner.BannerViewPager
+        android:id="@+id/home_bannerViewPager"
+        android:layout_width="@dimen/size_335dp"
+        android:layout_height="@dimen/size_135dp"
+        android:layout_gravity="center_horizontal"
+        android:clipChildren="false" />
+
+    <com.bee.android.common.view.indicator.BannerIndicator
+        android:id="@+id/home_bannerIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:gravity="center"
+        app:common_gap="@dimen/size_2dp"
+        app:common_select_color="@color/common_color_ff8a66"
+        app:common_slider_align="Center"
+        app:common_slider_height="@dimen/size_5dp"
+        app:common_slider_width="@dimen/size_12dp"
+        app:common_unSelect_color="@color/common_color__1a000000" />
+
+</LinearLayout>
