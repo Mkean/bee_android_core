@@ -15,12 +15,12 @@ import com.chad.library.adapter.base.BaseViewHolder
  *@Description:
  *
  */
-class HomeAdapter(data: List<HomeNativeBean>?, fragment: Fragment) :
+class HomeAdapter(data: List<HomeNativeBean>, fragment: Fragment) :
     BaseMultiItemQuickAdapter<HomeNativeBean, BaseViewHolder>(
         data
     ) {
 
-    var bannerMap: SparseArray<HomePageBannerView_New>? = null
+    private var bannerMap: SparseArray<HomePageBannerView_New>? = null
 
     init {
         addItemType(TYPE_HOME_DEFAULT, R.layout.home_fragment_item_home_default) // 默认

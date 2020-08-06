@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_379dp">
+
+    <com.bee.android.common.view.shadow.ShadowClipConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_349dp"
+        android:layout_marginStart="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:layout_marginEnd="@dimen/size_20dp"
+        android:layout_marginBottom="@dimen/size_20dp"
+        android:background="@android:color/white"
+        android:elevation="@dimen/size_10dp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shadowAlpha="0.45"
+        app:shadowRadius="@dimen/size_15dp"
+        tools:targetApi="lollipop">
+
+
+
+    </com.bee.android.common.view.shadow.ShadowClipConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
