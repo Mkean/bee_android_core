@@ -2,6 +2,8 @@ package com.bee.launch.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -9,6 +11,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -25,8 +28,12 @@ import com.bee.android.common.bean.UpdateBean;
 import com.bee.android.common.component.ComponentTagKt;
 import com.bee.android.common.config.CommonGlobalConfigKt;
 import com.bee.android.common.config.ParamConfigKt;
+import com.bee.android.common.dialog.TitleContentWrapTwoButtonSelectDialog;
 import com.bee.android.common.dialog.TitleContentWrapUpDownButtonDialog;
 import com.bee.android.common.dialog.UpdateApkDialog;
+import com.bee.android.common.event.ApkInstallEvent;
+import com.bee.android.common.event.AppExitEvent;
+import com.bee.android.common.event.UpdateSuggestAuthorizeEvent;
 import com.bee.android.common.mmkv.MMKVUtils;
 import com.bee.android.common.permission.PermissionUtils;
 import com.bee.android.common.view.TabViewPager;
@@ -36,6 +43,7 @@ import com.bee.core.logger.CommonLogger;
 import com.bee.core.permission.config.PermissionStr;
 import com.bee.core.spi.ComponentRegistry;
 import com.bee.core.utils.AppUtils;
+import com.bee.core.utils.ToastUtils;
 import com.bee.launch.R;
 import com.bee.launch.R2;
 import com.bee.launch.adapter.MainPagerAdapter;
@@ -47,8 +55,15 @@ import com.bee.launch.manager.DialogAddressManager;
 import com.bee.launch.manager.HomeDialogType;
 import com.bee.launch.presenter.MainPresenter;
 import com.bee.update.UpdateBuilder;
+import com.bee.update.UpdateDownLoadUtils;
+import com.bee.update.impl.DefaultDownloadWorker;
+import com.bee.update.update.NotificationDownloadCreator;
+import com.bee.update.update.NotificationInstallCreator;
 import com.google.android.material.tabs.TabLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -464,17 +479,178 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             }
 
             int finalType = type;
+            TitleContentWrapTwoButtonSelectDialog buttonDialog = new TitleContentWrapTwoButtonSelectDialog(this,
+                    title,
+                    spannableString,
+                    getResources().getString(R.string.launch_disagree),
+                    getResources().getString(R.string.launch_agree),
+                    new TitleContentWrapTwoButtonSelectDialog.ActionListener() {
+                        @Override
+                        public void clickLeft() {
+                            finish();
+                        }
+
+                        @Override
+                        public void clickRight() {
+                            dialogFinish(HomeDialogType.DialogTypePrivacyAgreement);
+                            if (finalType == 3) {
+                                MMKVUtils.putLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_PRIVACY_AGREEMENT_TIMESTAMP, userDataAgreementTime);
+                                MMKVUtils.putLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_REGISTER_AGREEMENT_TIMESTAMP, userRegisterAgreementTime);
+
+                            } else if (finalType == 2) {
+                                MMKVUtils.putLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_REGISTER_AGREEMENT_TIMESTAMP, userRegisterAgreementTime);
+                            } else if (finalType == 1) {
+                                MMKVUtils.putLong(ConstantsKt.LAUNCH_MMKV_ID, StoreKeyKt.SHOW_PRIVACY_AGREEMENT_TIMESTAMP, userDataAgreementTime);
+                            }
+                        }
+
+                        @Override
+                        public void noSelect() {
+                            ToastUtils.show(getString(R.string.launch_please_sure_select));
+                        }
+                    });
+            buttonDialog.show();
+        } else {
+            dialogFinish(HomeDialogType.DialogTypePrivacyAgreement);
+            CommonLogger.i(TAG, "无协议更新");
         }
     }
 
     @Override
-    public void showSuccess(@NotNull UpdateBean bean) {
-
+    protected boolean registerEventBus() {
+        return true;
     }
+
+    private Boolean isExit = false;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {
+            doExit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void doExit() {
+        if (!isExit) {
+            isExit = true;
+            ToastUtils.show("再按一次退出程序");
+            CommonApplication.runOnUiThreadDelayed(() -> isExit = false, 2000);
+        } else {
+            DefaultDownloadWorker.downloadFlag = false;
+            CommonApplication.againShowUpdate = false;
+
+            if (mUpdateBuilder != null && mUpdateBuilder.getInstallNotifier() != null) {
+                CommonLogger.d(TAG, "notification安装完成通知栏取消");
+                if (mUpdateBuilder.getInstallNotifier() instanceof NotificationInstallCreator) {
+                    if (mUpdateBuilder.getInstallNotifier() != null && ((NotificationInstallCreator) mUpdateBuilder.getInstallNotifier()).manager != null) {
+                        ((NotificationInstallCreator) mUpdateBuilder.getInstallNotifier()).manager.cancelAll();
+                    }
+                }
+
+                if (mUpdateBuilder.getDownloadNotifier() instanceof NotificationDownloadCreator) {
+                    if (mUpdateBuilder.getDownloadNotifier() != null && ((NotificationDownloadCreator) mUpdateBuilder.getDownloadNotifier()).manager != null) {
+                        try {
+                            ((NotificationDownloadCreator) mUpdateBuilder.getDownloadNotifier()).manager.cancelAll();
+                            ((NotificationDownloadCreator) mUpdateBuilder.getDownloadNotifier()).unregisterReceiver(this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+
+            EventBus.getDefault().post(new AppExitEvent());
+            System.exit(0);
+        }
+    }
+
+
+    private UpdateBean mUpdateBean;
+
+    @Override
+    public void showSuccess(UpdateBean bean) {
+        if (bean == null) {
+            handHomeReadyForSkip();
+            dialogFinish(HomeDialogType.DialogTypeUpdate);
+            return;
+        }
+
+        CommonLogger.i(TAG, "升级弹窗请求成功");
+        int type = 0;
+        try {
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo info = cm.getActiveNetworkInfo();
+            if (info != null && info.isConnected()) {
+                type = info.getType();
+            }
+        } catch (Exception e) {
+            CommonLogger.printErrStackTrace(TAG, e, "获取网络类型失败");
+        }
+
+        mUpdateBean = bean;
+
+        mUpdateApkDialog = new UpdateApkDialog(this);
+        mUpdateBuilder = UpdateBuilder.create();
+        UpdateDownLoadUtils.getInstance().startDownLoad(bean, mUpdateApkDialog, this,
+                type, mUpdateBuilder, 0, null, new UpdateDownLoadUtils.ClickListener() {
+                    @Override
+                    public void cancel() {
+                        CommonLogger.i(TAG, "获取版本升级结果成功 取消/无需");
+                        handHomeReadyForSkip();
+                        dialogFinish(HomeDialogType.DialogTypeUpdate);
+                    }
+
+                    @Override
+                    public void ensure() {
+                        CommonLogger.i(TAG, "获取版本升级结果成功 升级");
+                    }
+                });
+    }
+
 
     @Override
     public void showFail() {
+        CommonLogger.i(TAG, "升级弹窗请求失败");
+        CommonApplication.againShowUpdate = true;
+        handHomeReadyForSkip();
+        dialogFinish(HomeDialogType.DialogTypeUpdate);
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateSuggestAuthorizeEvent(UpdateSuggestAuthorizeEvent event) {
+        CommonLogger.i(TAG, "收到UpdateSuggestAuthorizeEvent");
+        handHomeReadyForSkip();
+        dialogFinish(HomeDialogType.DialogTypeUpdate);
+    }
+
+    /**
+     * TODO：后续添加吧
+     */
+    private void handHomeReadyForSkip() {
+        CommonLogger.i(TAG, "MainActivity skip!");
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void apkInstallEvent(ApkInstallEvent event) {
+        CommonLogger.d(TAG, "apk安装event接受");
+        if (mUpdateBuilder != null && mUpdateBuilder.getInstallNotifier() != null) {
+            CommonLogger.d(TAG, "notification安装完成通知栏取消");
+            if (((NotificationInstallCreator) mUpdateBuilder.getInstallNotifier()) != null && ((NotificationInstallCreator) mUpdateBuilder.getInstallNotifier()).manager != null) {
+                ((NotificationInstallCreator) mUpdateBuilder.getInstallNotifier()).manager.cancelAll();
+            }
+            if (mUpdateBean != null && mUpdateApkDialog != null && mUpdateApkDialog.isShowing()) {
+                mUpdateApkDialog.getLlNow().setEnabled(true);
+                mUpdateApkDialog.getTvUpdateDownloadError().setText("免流量更新");
+                mUpdateApkDialog.getTvStatusNet().setVisibility(View.VISIBLE);
+                mUpdateApkDialog.getTvStatusNet().setText("已为您准备好最新版本的蜜蜂");
+            }
+        }
     }
 
     private class MyClickableSpan extends ClickableSpan {
