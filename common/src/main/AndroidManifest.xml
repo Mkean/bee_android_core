@@ -13,6 +13,13 @@
 
     <application>
 
+        <activity
+            android:name=".web.activity.H5WebActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|keyboard|navigation|fontScale"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden|adjustResize" />
+
         <!--weChat share sdk begin-->
         <!-- 注意 activity-alias中的name中 wxapi.WXEntryActivity的前缀需要为应用的包名-->
         <activity

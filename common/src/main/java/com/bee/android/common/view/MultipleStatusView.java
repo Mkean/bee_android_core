@@ -13,15 +13,20 @@ import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bee.android.common.R;
+import com.bee.core.logger.CommonLogger;
 import com.bee.core.utils.ScreenUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 一个方便在多种状态下切换布局
+ * @Description: 一个方便在多种状态切换的view
+ * @Author: chailiwei
+ * @CreateDate: 2020-06-03 15:51
  */
+@SuppressWarnings("unused")
 public class MultipleStatusView extends RelativeLayout {
     private static final String TAG = "MultipleStatusView";
 
@@ -35,14 +40,20 @@ public class MultipleStatusView extends RelativeLayout {
     public static final int STATUS_ERROR = 0x03;
     public static final int STATUS_NO_NETWORK = 0x04;
     public static final int STATUS_LOGIN = 0x05;
-    public static final int STATUS_ERROR_FROM_MY = 0x06;
-    public static final int STATUS_IMAGE_EMPTY = 0x07;
+    public static final int STATUS_CHOOSE_COURSE = 0x06;
+    public static final int STATUS_LOGIN_FROM_MY = 0x07;
+    public static final int STATUS_CHOOSE_COURSE_FROM_MY = 0x08;
+    public static final int STATUS_ERROR_FROM_MY = 0x09;
+    public static final int STATUS_IMAGE_EMPTY = 0x10;
 
     private View mEmptyView;
     private View mErrorView;
     private View mLoadingView;
     private View mNoNetworkView;
     private View mLoginView;
+    private View mChooseCourseView;
+    private View mLoginFromMyView;
+    private View mChooseCourseFromMyView;
     private View mErrorFromMyView;
     private View mImageEmptyView;
 
@@ -51,6 +62,9 @@ public class MultipleStatusView extends RelativeLayout {
     private int mLoadingViewResId;
     private int mNoNetworkViewResId;
     private int mLoginViewResId;
+    private int mChooseCourseViewResId;
+    private int mLoginFromMyViewResId;
+    private int mChooseCourseFromMyViewResId;
     private int mErrorFromMyViewResId;
     private int mImageEmptyResId;
 
@@ -80,6 +94,9 @@ public class MultipleStatusView extends RelativeLayout {
         mLoadingViewResId = a.getResourceId(R.styleable.MultipleStatusView_loadingView, R.layout.common_loading_view);
         mNoNetworkViewResId = a.getResourceId(R.styleable.MultipleStatusView_noNetworkView, R.layout.common_no_network_view);
         mLoginViewResId = a.getResourceId(R.styleable.MultipleStatusView_loginView, R.layout.common_login_view);
+        mLoginFromMyViewResId = a.getResourceId(R.styleable.MultipleStatusView_loginFromMyView, R.layout.common_login_from_my_view);
+        mChooseCourseViewResId = a.getResourceId(R.styleable.MultipleStatusView_chooseCourseView, R.layout.common_choose_course_view);
+        mChooseCourseFromMyViewResId = a.getResourceId(R.styleable.MultipleStatusView_chooseCourseFromMyView, R.layout.common_choose_course_from_my_view);
         mErrorFromMyViewResId = a.getResourceId(R.styleable.MultipleStatusView_errorFromMyView, R.layout.common_error_from_my_view);
         a.recycle();
         mInflater = LayoutInflater.from(getContext());
@@ -101,7 +118,7 @@ public class MultipleStatusView extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Log.e("onFinishInflate", "onFinishInflate");
+        Log.e("onFinishInflate","onFinishInflate");
         showContent();
     }
 
@@ -183,6 +200,10 @@ public class MultipleStatusView extends RelativeLayout {
                         }
                     }
                 });
+            }
+            View lottieAnimationView = mEmptyView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
             }
             addView(mEmptyView, 0, layoutParams);
         }
@@ -272,6 +293,10 @@ public class MultipleStatusView extends RelativeLayout {
                     }
                 });
             }
+            View lottieAnimationView = mImageEmptyView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
+            }
             addView(mImageEmptyView, 0, layoutParams);
         }
         showView(mImageEmptyView);
@@ -338,6 +363,10 @@ public class MultipleStatusView extends RelativeLayout {
                     }
                 });
             }
+            View lottieAnimationView = mErrorView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
+            }
             addView(mErrorView, 0, layoutParams);
         }
         showView(mErrorView);
@@ -403,6 +432,10 @@ public class MultipleStatusView extends RelativeLayout {
                         }
                     }
                 });
+            }
+            View lottieAnimationView = mErrorFromMyView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
             }
             addView(mErrorFromMyView, 0, layoutParams);
         }
@@ -525,9 +558,83 @@ public class MultipleStatusView extends RelativeLayout {
                     }
                 });
             }
+            View lottieAnimationView = mLoginView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
+            }
             addView(mLoginView, 0, layoutParams);
         }
         showView(mLoginView);
+    }
+
+    /**
+     * 显示登录视图-我的tab模块使用
+     */
+    public final void showLoginFromMy() {
+        showLoginFromMy(mLoginFromMyViewResId, DEFAULT_LAYOUT_PARAMS);
+    }
+
+    /**
+     * 显示登录视图-我的tab模块使用
+     *
+     * @param hintResId  自定义提示文本内容
+     * @param formatArgs 占位符参数
+     */
+    public final void showLoginFromMy(int hintResId, Object... formatArgs) {
+        showLoginFromMy();
+        setStatusHintContent(mLoginFromMyView, hintResId, formatArgs);
+    }
+
+    /**
+     * 显示登录视图-我的tab模块使用
+     *
+     * @param hint 自定义提示文本内容
+     */
+    public final void showLoginFromMy(String hint) {
+        showLoginFromMy();
+        setStatusHintContent(mLoginFromMyView, hint);
+    }
+
+    /**
+     * 显示登录视图-我的tab模块使用
+     *
+     * @param layoutId     自定义布局文件
+     * @param layoutParams 布局参数
+     */
+    private final void showLoginFromMy(int layoutId, ViewGroup.LayoutParams layoutParams) {
+        showLoginFromMy(null == mLoginFromMyView ? inflateView(layoutId) : mLoginFromMyView, layoutParams);
+    }
+
+    /**
+     * 显示登录视图-我的tab模块使用
+     *
+     * @param view         自定义视图
+     * @param layoutParams 布局参数
+     */
+    private final void showLoginFromMy(View view, ViewGroup.LayoutParams layoutParams) {
+        checkNull(view, "No network view is null.");
+        checkNull(layoutParams, "Layout params is null.");
+        changeViewStatus(STATUS_LOGIN_FROM_MY);
+        if (null == mLoginFromMyView) {
+            mLoginFromMyView = view;
+            View noNetworkRetryView = mLoginFromMyView.findViewById(R.id.retry_view);
+            if (null != mOnViewClickListener && null != noNetworkRetryView) {
+                noNetworkRetryView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mOnViewClickListener != null) {
+                            mOnViewClickListener.OnLoginClick();
+                        }
+                    }
+                });
+            }
+            View lottieAnimationView = mLoginFromMyView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
+            }
+            addView(mLoginFromMyView, 0, layoutParams);
+        }
+        showView(mLoginFromMyView);
     }
 
     /**
@@ -591,9 +698,153 @@ public class MultipleStatusView extends RelativeLayout {
                     }
                 });
             }
+            View lottieAnimationView = mNoNetworkView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
+            }
             addView(mNoNetworkView, 0, layoutParams);
         }
         showView(mNoNetworkView);
+    }
+
+    /**
+     * 显示去选课视图
+     */
+    public final void showChooseCourse() {
+        showChooseCourse(mChooseCourseViewResId, DEFAULT_LAYOUT_PARAMS);
+    }
+
+    /**
+     * 显示去选课视图
+     *
+     * @param hintResId  自定义提示文本内容
+     * @param formatArgs 占位符参数
+     */
+    public final void showChooseCourse(int hintResId, Object... formatArgs) {
+        showChooseCourse();
+        setStatusHintContent(mChooseCourseView, hintResId, formatArgs);
+    }
+
+    /**
+     * 显示去选课视图
+     *
+     * @param hint 自定义提示文本内容
+     */
+    public final void showChooseCourse(String hint) {
+        showChooseCourse();
+        setStatusHintContent(mChooseCourseView, hint);
+    }
+
+    /**
+     * 显示去选课视图
+     *
+     * @param layoutId     自定义布局文件
+     * @param layoutParams 布局参数
+     */
+    private final void showChooseCourse(int layoutId, ViewGroup.LayoutParams layoutParams) {
+        showChooseCourse(null == mChooseCourseView ? inflateView(layoutId) : mChooseCourseView, layoutParams);
+    }
+
+    /**
+     * 显示去选课视图
+     *
+     * @param view         自定义视图
+     * @param layoutParams 布局参数
+     */
+    private final void showChooseCourse(View view, ViewGroup.LayoutParams layoutParams) {
+        checkNull(view, "No network view is null.");
+        checkNull(layoutParams, "Layout params is null.");
+        changeViewStatus(STATUS_CHOOSE_COURSE);
+        if (null == mChooseCourseView) {
+            mChooseCourseView = view;
+            View noNetworkRetryView = mChooseCourseView.findViewById(R.id.retry_view);
+            if (null != mOnViewClickListener && null != noNetworkRetryView) {
+                noNetworkRetryView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mOnViewClickListener != null) {
+                            mOnViewClickListener.OnChooseCourseClick();
+                        }
+                    }
+                });
+            }
+            View lottieAnimationView = mChooseCourseView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
+            }
+            addView(mChooseCourseView, 0, layoutParams);
+        }
+        showView(mChooseCourseView);
+    }
+
+    /**
+     * 显示去选课视图
+     */
+    public final void showChooseCourseFromMy() {
+        showChooseCourseFromMy(mChooseCourseFromMyViewResId, DEFAULT_LAYOUT_PARAMS);
+    }
+
+    /**
+     * 显示去选课视图
+     *
+     * @param hintResId  自定义提示文本内容
+     * @param formatArgs 占位符参数
+     */
+    public final void showChooseCourseFromMy(int hintResId, Object... formatArgs) {
+        showChooseCourseFromMy();
+        setStatusHintContent(mChooseCourseFromMyView, hintResId, formatArgs);
+    }
+
+    /**
+     * 显示去选课视图
+     *
+     * @param hint 自定义提示文本内容
+     */
+    public final void showChooseCourseFromMy(String hint) {
+        showChooseCourseFromMy();
+        setStatusHintContent(mChooseCourseFromMyView, hint);
+    }
+
+    /**
+     * 显示去选课视图
+     *
+     * @param layoutId     自定义布局文件
+     * @param layoutParams 布局参数
+     */
+    private final void showChooseCourseFromMy(int layoutId, ViewGroup.LayoutParams layoutParams) {
+        showChooseCourseFromMy(null == mChooseCourseFromMyView ? inflateView(layoutId) : mChooseCourseFromMyView, layoutParams);
+    }
+
+    /**
+     * 显示去选课视图
+     *
+     * @param view         自定义视图
+     * @param layoutParams 布局参数
+     */
+    private final void showChooseCourseFromMy(View view, ViewGroup.LayoutParams layoutParams) {
+        checkNull(view, "No network view is null.");
+        checkNull(layoutParams, "Layout params is null.");
+        changeViewStatus(STATUS_CHOOSE_COURSE_FROM_MY);
+        if (null == mChooseCourseFromMyView) {
+            mChooseCourseFromMyView = view;
+            View noNetworkRetryView = mChooseCourseFromMyView.findViewById(R.id.retry_view);
+            if (null != mOnViewClickListener && null != noNetworkRetryView) {
+                noNetworkRetryView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mOnViewClickListener != null) {
+                            mOnViewClickListener.OnChooseCourseClick();
+                        }
+                    }
+                });
+            }
+            View lottieAnimationView = mChooseCourseFromMyView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                ((LottieAnimationView) lottieAnimationView).playAnimation();
+            }
+            addView(mChooseCourseFromMyView, 0, layoutParams);
+        }
+        showView(mChooseCourseFromMyView);
     }
 
     /**
@@ -637,7 +888,7 @@ public class MultipleStatusView extends RelativeLayout {
         if (v == null) {
             return;
         }
-        Log.i(TAG, "showView:" + v.toString());
+        CommonLogger.i(TAG, "showView:" + v.toString());
         if (mCurrentView != null && mCurrentView != v) {
             clear(mCurrentView);
             mCurrentView = null;
@@ -663,7 +914,7 @@ public class MultipleStatusView extends RelativeLayout {
     }
 
     private void showContentView() {
-        Log.e("MultipleStatusView", "showContentView");
+        Log.e("MultipleStatusView","showContentView");
         clearAll();
         final int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -681,7 +932,7 @@ public class MultipleStatusView extends RelativeLayout {
     }
 
     private void clearAll() {
-        clear(mEmptyView, mLoadingView, mErrorView, mNoNetworkView, mLoginView, mErrorFromMyView, mImageEmptyView);
+        clear(mEmptyView, mLoadingView, mErrorView, mNoNetworkView, mLoginView, mChooseCourseView, mLoginFromMyView, mChooseCourseFromMyView, mErrorFromMyView, mImageEmptyView);
         mCurrentView = null;
     }
 
@@ -706,6 +957,10 @@ public class MultipleStatusView extends RelativeLayout {
         if (v == null) {
             return;
         }
+        View lottieAnimationView = v.findViewById(R.id.lottie_view);
+        if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+            ((LottieAnimationView) lottieAnimationView).cancelAnimation();
+        }
         if (v == mEmptyView) {
             mEmptyView = null;
         } else if (v == mErrorView) {
@@ -716,6 +971,12 @@ public class MultipleStatusView extends RelativeLayout {
             mNoNetworkView = null;
         } else if (v == mLoginView) {
             mLoginView = null;
+        } else if (v == mChooseCourseView) {
+            mChooseCourseView = null;
+        } else if (v == mLoginFromMyView) {
+            mLoginFromMyView = null;
+        } else if (v == mChooseCourseFromMyView) {
+            mChooseCourseFromMyView = null;
         } else if (v == mErrorFromMyView) {
             mErrorFromMyView = null;
         } else if (v == mImageEmptyView) {
@@ -725,7 +986,7 @@ public class MultipleStatusView extends RelativeLayout {
 
     private boolean checkIsContentView(View v) {
         if (v == mEmptyView || v == mErrorView || v == mLoadingView
-                || v == mNoNetworkView || v == mLoginView || v == mErrorFromMyView || v == mImageEmptyView) {
+                || v == mNoNetworkView || v == mLoginView || v == mChooseCourseView || v == mLoginFromMyView || v == mChooseCourseFromMyView || v == mErrorFromMyView || v == mImageEmptyView) {
             return false;
         }
         return true;
@@ -745,6 +1006,11 @@ public class MultipleStatusView extends RelativeLayout {
          * 点击登录View
          */
         void OnLoginClick();
+
+        /**
+         * 点击去选课View
+         */
+        void OnChooseCourseClick();
     }
 
     /**
@@ -761,6 +1027,11 @@ public class MultipleStatusView extends RelativeLayout {
 
         @Override
         public void OnLoginClick() {
+
+        }
+
+        @Override
+        public void OnChooseCourseClick() {
 
         }
     }
@@ -803,6 +1074,19 @@ public class MultipleStatusView extends RelativeLayout {
         mViewStatus = newViewStatus;
     }
 
+    public void startLottieAnimation(boolean isPlay) {
+        if (mCurrentView != null) {
+            View lottieAnimationView = mCurrentView.findViewById(R.id.lottie_view);
+            if (lottieAnimationView != null && lottieAnimationView instanceof LottieAnimationView) {
+                if (isPlay) {
+                    ((LottieAnimationView) lottieAnimationView).playAnimation();
+                } else {
+                    ((LottieAnimationView) lottieAnimationView).cancelAnimation();
+                }
+            }
+        }
+    }
+
     public void release() {
         clearAll();
         if (null != mOnViewClickListener) {
@@ -812,31 +1096,28 @@ public class MultipleStatusView extends RelativeLayout {
             mViewStatusListener = null;
         }
     }
-
     MyLoadingView myLoadingView;
+    public void showLoadingView(){
+        if (myLoadingView==null) {
+            Log.e("MultipleStatusView","myLoadingView==null");
 
-    public void showLoadingView() {
-        if (myLoadingView == null) {
-            Log.e("MultipleStatusView", "myLoadingView==null");
 
+            myLoadingView =new MyLoadingView(getContext());
 
-            myLoadingView = new MyLoadingView(getContext());
-
-            LayoutParams layoutParams = new LayoutParams(ScreenUtil.dip2px(130), ScreenUtil.dip2px(85));
+            LayoutParams layoutParams =new LayoutParams(ScreenUtil.dip2px(130), ScreenUtil.dip2px(85));
             layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-            myLoadingView.setBackgroundResource(R.drawable.common_shape_70percent_000000_15);
-            addView(myLoadingView, layoutParams);
-        } else {
-            Log.e("MultipleStatusView", "myLoadingView!=null");
+            myLoadingView.setBackgroundResource(R.drawable.common_my_loading_dialog_bg);
+            addView(myLoadingView,layoutParams);
+        }else{
+            Log.e("MultipleStatusView","myLoadingView!=null");
 
             myLoadingView.setVisibility(VISIBLE);
 
         }
         myLoadingView.showLoading();
     }
-
-    public void hideLoadingView() {
-        if (myLoadingView != null) {
+    public void hideLoadingView(){
+        if (myLoadingView!=null) {
             myLoadingView.setVisibility(GONE);
             myLoadingView.hideLoading();
         }
@@ -845,8 +1126,8 @@ public class MultipleStatusView extends RelativeLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Log.e("MultipleStatusView", "onDetachedFromWindow");
-        if (myLoadingView != null) {
+        Log.e("MultipleStatusView","onDetachedFromWindow");
+        if (myLoadingView!=null) {
             myLoadingView.clearAnimation();
         }
     }

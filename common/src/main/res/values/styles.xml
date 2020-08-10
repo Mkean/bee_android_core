@@ -64,6 +64,9 @@
         <attr name="emptyFromWorkWallView" format="reference" />
         <attr name="noNetworkView" format="reference" />
         <attr name="loginView" format="reference" />
+        <attr name="chooseCourseView" format="reference" />
+        <attr name="loginFromMyView" format="reference" />
+        <attr name="chooseCourseFromMyView" format="reference" />
         <attr name="errorFromMyView" format="reference" />
 
     </declare-styleable>

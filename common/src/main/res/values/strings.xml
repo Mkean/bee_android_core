@@ -7,9 +7,14 @@
     <string name="common_load_error">加载失败，请稍后重试</string>
     <string name="common_net_error">网络异常，请稍后重试</string>
 
+    <string name="common_login">登录/注册</string>
+
     <string name="common_login_tip">你还没有登录，请先登录吧</string>
+    <string name="common_choose_course_tip">快为宝贝选择课程吧</string>
+    <string name="common_choose_course_from_my_tip">快来和小猴一起学习吧～</string>
 
     <string name="common_click_again">点击重试</string>
+    <string name="common_choose_course">去选课</string>
 
     <string name="common_no_works">你还没有订单哦</string>
     <string name="common_new_version_title">发现新版本啦！</string>

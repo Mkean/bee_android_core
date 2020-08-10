@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
@@ -9,7 +10,7 @@
         android:layout_width="@dimen/size_192dp"
         android:layout_height="@dimen/size_145dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/common_no_works" />
+        android:src="@drawable/common_no_works"/>
 
     <TextView
         android:id="@+id/hint_content"
@@ -19,8 +20,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:layout_marginTop="@dimen/size_30dp"
-        android:text="@string/common_no_works"
+        android:textColor="@color/common_color_666666"
         android:textSize="@dimen/sp_14"
-        android:textColor="@color/common_color_666666"/>
-
+        android:text="@string/common_no_works"/>
 </RelativeLayout>
