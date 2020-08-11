@@ -1,1 +1,6 @@
 apply from: "$project.rootDir/build_gradle/library.gradle"
+
+dependencies {
+
+    api 'cn.jzvd:jiaozivideoplayer:7.0.5'
+}
