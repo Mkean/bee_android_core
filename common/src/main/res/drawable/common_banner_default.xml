@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:width="@dimen/size_335dp"
+        android:height="@dimen/size_150dp"
+        android:gravity="center">
+        <shape>
+            <solid android:color="#F4F4F4" />
+            <corners android:radius="@dimen/size_15dp" />
+        </shape>
+    </item>
+
+    <item
+        android:width="@dimen/size_176dp"
+        android:height="@dimen/size_45dp"
+        android:gravity="center">
+        <!--TODO common_default_big 图片替换-->
+
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/common_default_big" />
+    </item>
+
+</layer-list>
