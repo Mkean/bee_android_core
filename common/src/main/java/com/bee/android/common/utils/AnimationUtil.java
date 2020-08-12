@@ -1,5 +1,6 @@
 package com.bee.android.common.utils;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,5 +27,23 @@ public class AnimationUtil {
         set.setInterpolator(new DecelerateInterpolator());
         view.startAnimation(set);
 
+    }
+
+    /**
+     * 属性动画
+     * 透明度动画
+     *
+     * @param view
+     * @param fromAlpha
+     * @param toAlpha
+     * @param duration
+     * @return
+     */
+    public static ObjectAnimator alphaAnimation(View view, float fromAlpha, float toAlpha, long duration) {
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "alpha", fromAlpha, toAlpha);
+        objectAnimator.setDuration(duration);
+        objectAnimator.start();
+
+        return objectAnimator;
     }
 }
