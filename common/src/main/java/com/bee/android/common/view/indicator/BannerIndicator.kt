@@ -40,17 +40,41 @@ class BannerIndicator : LinearLayout {
 
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         orientation = HORIZONTAL
         if (context != null) {
-            val array = context.obtainStyledAttributes(attrs, R.styleable.CommonBannerIndicator, defStyleAttr, 0)
-            dsahGap = array.getDimension(R.styleable.CommonBannerIndicator_common_gap, ScreenUtil.dip2px(context, 2f).toFloat()).toInt()
-            slider_width = array.getDimension(R.styleable.CommonBannerIndicator_common_slider_width, ScreenUtil.dip2px(context, 5f).toFloat()).toInt()
-            slider_height = array.getDimension(R.styleable.CommonBannerIndicator_common_slider_height, ScreenUtil.dip2px(context, 2f).toFloat()).toInt()
+            val array = context.obtainStyledAttributes(
+                attrs,
+                R.styleable.CommonBannerIndicator,
+                defStyleAttr,
+                0
+            )
+            dsahGap = array.getDimension(
+                R.styleable.CommonBannerIndicator_common_gap,
+                ScreenUtil.dip2px(context, 2f).toFloat()
+            ).toInt()
+            slider_width = array.getDimension(
+                R.styleable.CommonBannerIndicator_common_slider_width,
+                ScreenUtil.dip2px(context, 5f).toFloat()
+            ).toInt()
+            slider_height = array.getDimension(
+                R.styleable.CommonBannerIndicator_common_slider_height,
+                ScreenUtil.dip2px(context, 2f).toFloat()
+            ).toInt()
             sliderAlign = array.getInt(R.styleable.CommonBannerIndicator_common_slider_align, 1)
 
-            mSelectColor = array.getColor(R.styleable.CommonBannerIndicator_common_select_color, Color.parseColor("#ffc700"))
-            mUnSelectColor = array.getColor(R.styleable.CommonBannerIndicator_common_unSelect_color, Color.parseColor("#d4d4d4"))
+            mSelectColor = array.getColor(
+                R.styleable.CommonBannerIndicator_common_select_color,
+                Color.parseColor("#ffc700")
+            )
+            mUnSelectColor = array.getColor(
+                R.styleable.CommonBannerIndicator_common_unSelect_color,
+                Color.parseColor("#d4d4d4")
+            )
 
             array.recycle()
         }
@@ -60,16 +84,16 @@ class BannerIndicator : LinearLayout {
     /**
      * 和ViewPager联动，根据ViewPager页面动态生成相应的小圆点
      */
-    fun setUpWithViewPager(viewPager: ViewPager) {
+    fun setUpWithViewPager(viewPager: ViewPager?) {
         removeAllViews()
 
-        if (viewPager.adapter == null || viewPager.adapter!!.count < 2) {
+        if (viewPager == null || viewPager.adapter == null || viewPager.adapter!!.count < 2) {
             return
         }
         count = viewPager.adapter!!.count - 2
 
         this.viewPager = viewPager
-        for (i: Int in 0..viewPager.adapter!!.count - 2) {
+        for (i: Int in 0 until viewPager.adapter!!.count - 2) {
             val imageView = BannerItemView(context, sliderAlign)
             val layoutParams = LayoutParams(slider_width, slider_height)
             // 设置小圆点之间的距离
@@ -179,7 +203,7 @@ class BannerIndicator : LinearLayout {
      * @param roundRectView
      */
     private fun getEnlarge(roundRectView: BannerItemView): ValueAnimator =
-            ObjectAnimator.ofFloat(roundRectView, "rectWidth", 0f, getOffset(roundRectView).toFloat())
+        ObjectAnimator.ofFloat(roundRectView, "rectWidth", 0f, getOffset(roundRectView).toFloat())
 
     /**
      * 缩小动画
@@ -187,7 +211,7 @@ class BannerIndicator : LinearLayout {
      * @param roundRectView
      */
     private fun getShrink(roundRectView: BannerItemView): ValueAnimator =
-            ObjectAnimator.ofFloat(roundRectView, "rectWidth", getOffset(roundRectView).toFloat(), 0f)
+        ObjectAnimator.ofFloat(roundRectView, "rectWidth", getOffset(roundRectView).toFloat(), 0f)
 
 
     /**

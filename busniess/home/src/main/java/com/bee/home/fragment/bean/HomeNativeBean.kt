@@ -12,10 +12,10 @@ import java.io.Serializable
 data class HomeNativeBean(
 
     @SerializedName("banner_list")
-    val banner_list: List<HomeBannerBean>?,
+    var banner_list: List<HomeBannerBean>? = null,
 
     @SerializedName("course")
-    val course: List<HomeSubjectBean>?
+    var course: List<HomeSubjectBean>?=null
 
 ) : Serializable, MultiItemEntity {
 
@@ -39,10 +39,10 @@ data class HomeNativeBean(
         when (type) {
             TYPE_HOME_BANNER -> {
                 // banner 类型
-                if (banner_list != null && banner_list.isNotEmpty()) {
+                if (banner_list != null && banner_list!!.isNotEmpty()) {
                     var bannerCount = 0
 
-                    for (bannerBean in banner_list) {
+                    for (bannerBean in banner_list!!) {
                         if (bannerBean != null) {
                             bannerCount++
                         } else {
@@ -50,23 +50,23 @@ data class HomeNativeBean(
                         }
                     }
 
-                    if (bannerCount == banner_list.size) {
+                    if (bannerCount == banner_list!!.size) {
                         isSuccess = true
                     }
                 }
             }
             TYPE_HOME_COURSE -> {
                 // 课程类型
-                if (course != null && course.isNotEmpty()) {
+                if (course != null && course!!.isNotEmpty()) {
                     var courseCount = 0
-                    for (subjectBean in course) {
+                    for (subjectBean in course!!) {
                         if (subjectBean != null && subjectBean.isDataSuccess()) {
                             courseCount++
                         } else {
                             break
                         }
                     }
-                    if (courseCount == course.size) {
+                    if (courseCount == course!!.size) {
                         isSuccess = true
                     }
                 }

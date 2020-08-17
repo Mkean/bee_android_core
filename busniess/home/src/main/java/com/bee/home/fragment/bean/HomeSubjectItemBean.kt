@@ -1,5 +1,6 @@
 package com.bee.home.fragment.bean
 
+import com.bee.core.logger.CommonLogger
 import com.bee.core.utils.StringUtils
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.google.gson.annotations.SerializedName
@@ -22,21 +23,23 @@ data class HomeSubjectItemBean(
 
 ) : Serializable, MultiItemEntity {
 
-    private val TYPE_SERVER_HOME_COURSE_EXPERIENCE = "1" // String 比较用的，体验课类型
-    private val TYPE_SERVER_HOME_COURSE_SYSTEM = "2" // String 比较用的，系统课类型
-
     companion object {
+
+        const val TYPE_SERVER_HOME_COURSE_EXPERIENCE = "1" // String 比较用的，体验课类型
+        const val TYPE_SERVER_HOME_COURSE_SYSTEM = "2" // String 比较用的，系统课类型
+
         const val TYPE_HOME_COURSE_DEFAULT = -1 // 默认类型
         const val TYPE_HOME_COURSE_EXPERIENCE = 1 // 体验课类型
         const val TYPE_HOME_COURSE_SYSTEM = 2 // 系统课类型
     }
 
     override fun getItemType(): Int {
-        return when {
-            TYPE_SERVER_HOME_COURSE_EXPERIENCE == course_type -> {
+
+        return when (course_type) {
+            TYPE_SERVER_HOME_COURSE_EXPERIENCE -> {
                 TYPE_HOME_COURSE_EXPERIENCE
             }
-            TYPE_SERVER_HOME_COURSE_SYSTEM == course_type -> {
+            TYPE_SERVER_HOME_COURSE_SYSTEM -> {
                 TYPE_HOME_COURSE_SYSTEM
             }
             else -> {
@@ -46,7 +49,7 @@ data class HomeSubjectItemBean(
     }
 
     fun isDataSuccess(): Boolean {
-        var isSuccess = false
+        val isSuccess: Boolean
         when (itemType) {
             TYPE_HOME_COURSE_EXPERIENCE -> {
                 // 体验课
@@ -69,5 +72,10 @@ data class HomeSubjectItemBean(
         }
         return isSuccess
     }
+
+    override fun toString(): String {
+        return "HomeSubjectItemBean(course_type='$course_type', experience_course=$experience_course, system_course=$system_course, TYPE_SERVER_HOME_COURSE_EXPERIENCE='$TYPE_SERVER_HOME_COURSE_EXPERIENCE', TYPE_SERVER_HOME_COURSE_SYSTEM='$TYPE_SERVER_HOME_COURSE_SYSTEM')"
+    }
+
 
 }

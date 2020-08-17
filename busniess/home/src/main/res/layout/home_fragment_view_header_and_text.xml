@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:clipChildren="true">
+
+    <ImageView
+        android:id="@+id/view_header_text_header_one_iv"
+        android:layout_width="@dimen/size_21dp"
+        android:layout_height="@dimen/size_21dp"
+        android:background="@drawable/common_shape_bg_radius_45_white"
+        android:padding="@dimen/size_1dp"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/view_header_text_header_two_iv"
+        android:layout_width="@dimen/size_21dp"
+        android:layout_height="@dimen/size_21dp"
+        android:background="@drawable/common_shape_bg_radius_45_white"
+        android:padding="@dimen/size_1dp"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/view_header_text_header_three_iv"
+        android:layout_width="@dimen/size_21dp"
+        android:layout_height="@dimen/size_21dp"
+        android:background="@drawable/common_shape_bg_radius_45_white"
+        android:padding="@dimen/size_1dp"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/view_header_text_header_four_iv"
+        android:layout_width="@dimen/size_21dp"
+        android:layout_height="@dimen/size_21dp"
+        android:background="@drawable/common_shape_bg_radius_45_white"
+        android:padding="@dimen/size_1dp"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.bee.home.fragment.widget.AnimationTextView
+        android:id="@+id/view_header_text_txt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_50dp"
+        android:background="@drawable/home_fragment_icon_speek_white"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/common_color_black_313336"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tool:text="南京的xxx已经购买" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

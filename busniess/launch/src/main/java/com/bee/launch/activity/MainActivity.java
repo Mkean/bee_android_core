@@ -26,7 +26,6 @@ import com.bee.android.common.base.BaseActivity;
 import com.bee.android.common.base.CommonApplication;
 import com.bee.android.common.bean.UpdateBean;
 import com.bee.android.common.component.ComponentTagKt;
-import com.bee.android.common.config.CommonGlobalConfigKt;
 import com.bee.android.common.config.ParamConfigKt;
 import com.bee.android.common.dialog.TitleContentWrapTwoButtonSelectDialog;
 import com.bee.android.common.dialog.TitleContentWrapUpDownButtonDialog;
@@ -42,7 +41,6 @@ import com.bee.core.delegate.IComponentDescription;
 import com.bee.core.logger.CommonLogger;
 import com.bee.core.permission.config.PermissionStr;
 import com.bee.core.spi.ComponentRegistry;
-import com.bee.core.utils.AppUtils;
 import com.bee.core.utils.ToastUtils;
 import com.bee.launch.R;
 import com.bee.launch.R2;
@@ -325,7 +323,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 break;
 
             case DialogTypePrivacyAgreement:
-                mPresenter.getAppUpdate(AppUtils.getVersionName(this), CommonGlobalConfigKt.APP_ID);
+//                mPresenter.getAppUpdate(AppUtils.getVersionName(this), CommonGlobalConfigKt.APP_ID);
                 break;
 
             case DialogTypeShowAddress:

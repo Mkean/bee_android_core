@@ -23,7 +23,6 @@ import com.bee.home.fragment.listener.HomeSubjectBeanInterface;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdStd;
 
 import static com.bee.home.fragment.bean.HomeSubjectExperienceBannerBean.banner_type_image;
 import static com.bee.home.fragment.bean.HomeSubjectExperienceBannerBean.banner_type_video;

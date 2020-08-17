@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -81,6 +80,7 @@ public class HomeCourseBottomView extends ConstraintLayout {
     }
 
     public void setData(List<String> dataList) {
+        CommonLogger.e("HomeCourseBottomView", "dataList.size()==" + dataList.size());
         if (dataList != null && dataList.size() > 0) {
             this.urlList = dataList;
 
@@ -99,8 +99,8 @@ public class HomeCourseBottomView extends ConstraintLayout {
                 this.urlList.clear();
             }
             CommonLogger.e(TAG, "没有数据展示");
+            loadSingleUrl("");
         }
-        loadSingleUrl("");
     }
 
     public void setDataForObject(List<HomeSubjectExperienceBannerBean> dataList) {

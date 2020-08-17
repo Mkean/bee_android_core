@@ -41,4 +41,10 @@ data class HomeSubjectBean(
         }
         return isSuccess
     }
+
+    override fun toString(): String {
+        return "HomeSubjectBean(subject_name='$subject_name', subject_id='$subject_id', courses=$courses)"
+    }
+
+
 }

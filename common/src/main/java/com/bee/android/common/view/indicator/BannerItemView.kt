@@ -43,7 +43,7 @@ class BannerItemView : View {
     private fun init() {
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         rectF = RectF()
-        mPaint!!.color = Color.parseColor("d4d4d4")
+        mPaint!!.color = Color.parseColor("#d4d4d4")
     }
 
     override fun onDraw(canvas: Canvas?) {

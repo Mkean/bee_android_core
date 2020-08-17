@@ -57,7 +57,7 @@ public class CommonRefreshBeeHeader extends RelativeLayout implements RefreshHea
         idleAnimationDrawable = (AnimationDrawable) idleIv.getBackground();
 
         outIv = findViewById(R.id.view_header_bee_out_iv);
-        outAnimationDrawable = (AnimationDrawable) outIv.getDrawable();
+        outAnimationDrawable = (AnimationDrawable) outIv.getBackground();
     }
 
     /**

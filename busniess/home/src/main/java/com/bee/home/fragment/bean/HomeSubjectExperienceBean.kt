@@ -83,18 +83,19 @@ data class HomeSubjectExperienceBean(
         const val SALE_STATE_END = 3 // 销售状态 --- "已售罄"
         const val SALE_STATE_START = 2 // 销售状态 --- "已开售"
         const val SALE_STATE_NONE = 1 // 销售状态 --- "未开售"
+
+        const val SALE_NATIVE_STATE_END = "3"
+        const val SALE_NATIVE_STATE_START = "2"
+        const val SALE_NATIVE_STATE_NONE = "1"
+
     }
 
-    private val SALE_NATIVE_STATE_END = "3"
-    private val SALE_NATIVE_STATE_START = "2"
-    private val SALE_NATIVE_STATE_NONE = "1"
-
     fun getSaleState(): Int {
-        return when {
-            SALE_NATIVE_STATE_END == sale_state -> {
+        return when (sale_state) {
+            SALE_NATIVE_STATE_END -> {
                 SALE_STATE_END
             }
-            SALE_NATIVE_STATE_START == sale_state -> {
+            SALE_NATIVE_STATE_START -> {
                 SALE_STATE_START
             }
             else -> {
@@ -188,5 +189,10 @@ data class HomeSubjectExperienceBean(
         }
         return null
     }
+
+    override fun toString(): String {
+        return "HomeSubjectExperienceBean(course_type='$course_type', course_type_name='$course_type_name', discount_name='$discount_name', open_course_time='$open_course_time', sale_point_name='$sale_point_name', period='$period', card_promotion_price='$card_promotion_price', card_price='$card_price', unit='$unit', banner_type='$banner_type', banner_list=$banner_list, sale_state='$sale_state', sale_state_name='$sale_state_name', sale_start_time='$sale_start_time', service_time='$service_time', sale_rest_num='$sale_rest_num', show_stock='$show_stock', web_url='$web_url', button_name='$button_name', sale_user_list=$sale_user_list, SALE_NATIVE_STATE_END='$SALE_NATIVE_STATE_END', SALE_NATIVE_STATE_START='$SALE_NATIVE_STATE_START', SALE_NATIVE_STATE_NONE='$SALE_NATIVE_STATE_NONE')"
+    }
+
 
 }
