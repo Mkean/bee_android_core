@@ -220,7 +220,7 @@ public class NetWorkManager {
             return (T) serviceMap.get(baseUrl + service.getName());
         } else {
             // 根据baseUrl获取retrofit
-            Retrofit retrofit = retrofitMap.get(baseUrl);
+            Retrofit retrofit = getRetrofit(baseUrl);
             T t = retrofit.create(service);
             serviceMap.put(baseUrl + service.getName(), t);
             return t;
